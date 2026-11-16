@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { PieceState } from "@/lib/db";
+import { HelpButton } from "@/components/HelpDialog";
 
 export function Page({ title, back, children, action }: { title: string; back?: boolean; children: ReactNode; action?: ReactNode }) {
   return (
@@ -14,9 +15,12 @@ export function Page({ title, back, children, action }: { title: string; back?: 
               <ChevronLeft className="size-6" />
             </button>
           )}
-          <h1 className="min-w-0 flex-1 truncate font-display text-2xl font-extrabold tracking-tight">{title}</h1>
+          <h1 className="min-w-0 flex-1 line-clamp-2 font-display text-2xl font-extrabold tracking-tight">{title}</h1>
         </div>
-        {action && <div className="shrink-0">{action}</div>}
+        <div className="flex shrink-0 items-center gap-1">
+          <HelpButton />
+          {action && <div>{action}</div>}
+        </div>
       </header>
       {children}
     </div>
