@@ -1,13 +1,14 @@
 <div align="center">
   <img src="./public/icon-192.png" alt="Icono de Desarmario" width="112" height="112" />
-
-  # Desarmario
-
-  **Documenta el desmontaje de un mueble para volver a montarlo sin perder piezas, tornillos ni tiempo.**
-
-  PWA móvil, en español, sin cuentas y con todos los datos guardados en el propio dispositivo.
-
-  [Abrir la aplicación](https://desarmario.lovable.app) · [Funcionalidades](#funcionalidades) · [Instalación](#instalación-como-aplicación) · [Desarrollo](#desarrollo-local)
+  <h1>Desarmario</h1>
+  <p><strong>Documenta el desmontaje de un mueble para volver a montarlo sin perder piezas, tornillos ni tiempo.</strong></p>
+  <p>PWA móvil, en español, sin cuentas y con todos los datos guardados en el propio dispositivo.</p>
+  <p>
+    <a href="https://desarmario.lovable.app">Abrir la aplicación</a> ·
+    <a href="#funcionalidades">Funcionalidades</a> ·
+    <a href="#instalación-como-aplicación">Instalación</a> ·
+    <a href="#desarrollo-local">Desarrollo</a>
+  </p>
 </div>
 
 ---
@@ -112,7 +113,7 @@ La terminal mostrará la dirección local para abrir la aplicación.
 | `bun run dev` | Inicia el servidor de desarrollo. |
 | `bun run build` | Genera la compilación de producción. |
 | `bun run preview` | Sirve localmente la compilación de producción. |
-| `bun test` | Ejecuta todas las pruebas una vez. |
+| `bun run test` | Ejecuta todas las pruebas una vez. |
 | `bun run test:watch` | Ejecuta las pruebas en modo observación. |
 | `bun run lint` | Revisa el código con ESLint. |
 | `bun run format` | Da formato al proyecto con Prettier. |
