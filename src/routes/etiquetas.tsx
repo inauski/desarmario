@@ -102,7 +102,7 @@ function LabelsPage() {
       <input className={inputCls} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar código, nombre o ubicación" aria-label="Buscar etiquetas" />
       <div className="my-3 flex gap-2 overflow-x-auto pb-1">
         {(["all", "piece", "bag", "box"] as Filter[]).map((value) => (
-          <button type="button" key={value} onClick={() => setFilter(value)} className={cn("shrink-0 rounded-full border-2 px-4 py-2 text-sm font-bold", filter === value ? "border-foreground bg-foreground text-background" : "border-border")}>
+          <button type="button" key={value} onClick={() => setFilter(value)} className={cn("min-h-12 shrink-0 rounded-full border-2 px-4 py-2 text-sm font-bold", filter === value ? "border-foreground bg-foreground text-background" : "border-border")}>
             {value === "all" ? "Todas" : `${LABEL_KIND_NAMES[value]}s`}
           </button>
         ))}

@@ -57,7 +57,7 @@ export function StepMode({ mode }: { mode: "desmontaje" | "montaje" }) {
             <div className="p-4">
               <div className="mb-2 flex items-center justify-between gap-2">
                 <Code>Paso {current.order}</Code>
-                <Link to="/pasos/$id" params={{ id: String(current.id) }} aria-label="Editar este paso" className="grid size-10 place-items-center rounded-full bg-muted"><Pencil className="size-4" /></Link>
+                <Link to="/pasos/$id" params={{ id: String(current.id) }} aria-label="Editar este paso" className="grid size-12 shrink-0 place-items-center rounded-full bg-muted"><Pencil className="size-5" /></Link>
               </div>
               <h2 className="font-display text-2xl font-extrabold">{current.title || "Sin título"}</h2>
               {current.description && <p className="mt-2 whitespace-pre-wrap text-muted-foreground">{current.description}</p>}

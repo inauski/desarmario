@@ -126,14 +126,16 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useEffect(() => {
+    setupInstallPrompt();
+    setupPwa();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
-      <L2 to="/alta" aria-label="Alta rápida con cámara" className="fixed bottom-6 right-5 z-50 grid size-16 place-items-center rounded-full bg-primary text-primary-foreground shadow-tool active:scale-95">
-        <Camera className="size-7" />
-      </L2>
+      <CameraQuickAction />
       <Toaster position="top-center" />
     </QueryClientProvider>
   );

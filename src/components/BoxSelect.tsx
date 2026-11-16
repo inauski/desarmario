@@ -22,7 +22,7 @@ export function BoxSelect({ value, onChange }: { value: number | null; onChange:
     return (
       <div className="rounded-xl border-2 border-dashed border-border p-3">
         <p className="mb-2 text-sm text-muted-foreground">Aún no hay cajas donde guardar esto.</p>
-        <button type="button" onClick={create} className="inline-flex h-12 items-center gap-2 rounded-xl border-2 border-primary px-4 font-bold text-primary active:scale-[0.98]">
+        <button type="button" onClick={create} className="inline-flex min-h-14 items-center gap-2 rounded-xl border-2 border-primary px-4 font-bold text-primary active:scale-[0.98]">
           <Plus className="size-4" /> Crear caja
         </button>
       </div>

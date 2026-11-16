@@ -28,7 +28,7 @@ function Pieces() {
       <input className={inputCls} placeholder="Buscar por código o nombre" value={q} onChange={(e) => setQ(e.target.value)} />
       <div className="my-3 flex gap-2 overflow-x-auto pb-1">
         {(["", ...PIECE_STATES] as const).map((st) => (
-          <button key={st} onClick={() => setState(st)} className={cn("shrink-0 rounded-full border-2 px-4 py-2 text-sm font-bold capitalize", state === st ? "border-foreground bg-foreground text-background" : "border-border")}>
+          <button key={st} onClick={() => setState(st)} className={cn("min-h-12 shrink-0 rounded-full border-2 px-4 py-2 text-sm font-bold capitalize", state === st ? "border-foreground bg-foreground text-background" : "border-border")}>
             {st || "Todas"}
           </button>
         ))}
