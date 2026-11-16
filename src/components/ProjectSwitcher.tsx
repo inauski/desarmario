@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Check, Plus, Trash2 } from "lucide-react";
 import { createWorkspace, deleteWorkspace, listWorkspaces, activeWorkspaceKey, switchWorkspace, MAX_PROJECTS, type Workspace } from "@/lib/workspaces";
 
-export function ProjectSwitcher({ currentName }: { currentName?: string }) {
+export function ProjectSwitcher({ currentName }: { currentName?: string | undefined }) {
   const [list, setList] = useState<Workspace[]>([]);
   const [active, setActive] = useState("");
   useEffect(() => { setList(listWorkspaces()); setActive(activeWorkspaceKey()); }, []);
