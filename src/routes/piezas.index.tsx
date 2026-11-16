@@ -32,10 +32,12 @@ function Pieces() {
             {st || "Todas"}
           </button>
         ))}
-        <select value={box} onChange={(e) => setBox(e.target.value)} className="shrink-0 rounded-full border-2 border-border bg-card px-3 text-sm font-bold">
-          <option value="">Cualquier caja</option>
-          {boxes.map((b) => <option key={b.id} value={b.id}>{b.code}</option>)}
-        </select>
+        {boxes.length > 0 && (
+          <select value={box} onChange={(e) => setBox(e.target.value)} className="shrink-0 rounded-full border-2 border-border bg-card px-3 text-sm font-bold">
+            <option value="">Cualquier caja</option>
+            {boxes.map((b) => <option key={b.id} value={b.id}>{b.code}</option>)}
+          </select>
+        )}
       </div>
       <div className="space-y-2">
         {list.map((p) => (

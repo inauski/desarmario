@@ -58,7 +58,7 @@ function QuickAdd() {
           <input className={inputCls} value={text} onChange={(e) => setText(e.target.value)}
             placeholder={kind === "P" ? "Ej. Lateral izquierdo" : kind === "B" ? "6 tornillos 4x30" : "Ej. Trastero"} />
         </Field>
-        {kind !== "C" && <Field label="Caja (opcional)"><BoxSelect value={boxId} onChange={setBoxId} /></Field>}
+        {kind !== "C" && <Field label="Caja (opcional)" group><BoxSelect value={boxId} onChange={setBoxId} /></Field>}
         <button className={btnPrimary} disabled={saving} onClick={() => save(false)}>Guardar {code}</button>
         <button className={cn(btnSecondary, "w-full")} disabled={saving} onClick={() => save(true)}>Guardar y añadir otra</button>
       </div>

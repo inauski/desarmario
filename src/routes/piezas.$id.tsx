@@ -33,7 +33,7 @@ function PieceDetail() {
             ))}
           </div>
         </Field>
-        <Field label="Caja"><BoxSelect value={piece.boxId} onChange={(boxId) => set({ boxId, ...(boxId ? { state: "guardada" as const } : {}) })} /></Field>
+        <Field label="Caja" group><BoxSelect value={piece.boxId} onChange={(boxId) => set({ boxId, ...(boxId ? { state: "guardada" as const } : {}) })} /></Field>
         <div>
           <div className="mb-2 flex items-center justify-between">
             <span className="text-sm font-semibold text-muted-foreground">Uniones</span>

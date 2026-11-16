@@ -35,7 +35,7 @@ function BagDetail() {
         <PhotoPicker value={bag.photoIds} onChange={(photoIds) => set({ photoIds })} />
         <Field label="Contenido"><textarea className={inputCls} rows={2} defaultValue={bag.content} placeholder="6 tornillos 4x30 + 6 arandelas" onBlur={(e) => set({ content: e.target.value })} /></Field>
         <Field label="Cantidad"><input type="number" inputMode="numeric" className={inputCls} defaultValue={bag.quantity} onBlur={(e) => set({ quantity: Number(e.target.value) || 0 })} /></Field>
-        <Field label="Caja"><BoxSelect value={bag.boxId} onChange={(boxId) => set({ boxId })} /></Field>
+        <Field label="Caja" group><BoxSelect value={bag.boxId} onChange={(boxId) => set({ boxId })} /></Field>
         <button onClick={async () => { if (confirm(`¿Borrar ${bag.code}?`)) { if (bag.jointId) await db.joints.update(bag.jointId, { bagId: null }); await db.bags.delete(bag.id!); nav({ to: "/cajas" }); } }}
           className="flex w-full items-center justify-center gap-2 py-3 font-semibold text-destructive"><Trash2 className="size-4" /> Borrar bolsa</button>
       </div>

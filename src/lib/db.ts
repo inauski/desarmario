@@ -98,6 +98,13 @@ export async function deleteJoint(jointId: number) {
   });
 }
 
+/** Crea una caja con el siguiente código C-N y devuelve su id y código. */
+export async function createBox(location = "") {
+  const code = await nextCode("C");
+  const id = await db.boxes.add({ code, location, photoIds: [], createdAt: Date.now() });
+  return { id: Number(id), code };
+}
+
 export async function getProject(): Promise<Project> {
   return (await db.project.get(1)) ?? { id: 1, name: "Mi armario", description: "", photoIds: [] };
 }
