@@ -32,7 +32,7 @@ export function StepMode({ mode }: { mode: "desmontaje" | "montaje" }) {
   }
 
   return (
-    <Page title={isAssembly ? "Modo montaje" : "Modo desmontaje"} back action={<Link to="/pasos" className="text-sm font-bold text-primary">Ver pasos</Link>}>
+    <Page title={isAssembly ? "Modo montaje" : "Modo desmontaje"} back action={<Link to="/pasos" className="inline-flex min-h-12 items-center text-sm font-bold text-primary">Ver pasos</Link>}>
       {!rawSteps ? <p className="text-muted-foreground">Cargando…</p> : !current ? (
         <div className="rounded-3xl border-2 border-dashed border-border p-6 text-center">
           <p className="mb-4 text-muted-foreground">Primero crea los pasos del desmontaje.</p>

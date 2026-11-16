@@ -47,13 +47,13 @@ export function Field({ label, children, group }: { label: string; children: Rea
   );
 }
 
-export const inputCls = "w-full rounded-xl border-2 border-input bg-card px-4 py-3 text-base outline-none focus:border-primary";
-export const btnPrimary = "inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 text-lg font-bold text-primary-foreground shadow-tool active:scale-[0.98] disabled:opacity-50";
-export const btnSecondary = "inline-flex h-12 items-center justify-center gap-2 rounded-xl border-2 border-border bg-card px-4 font-semibold active:scale-[0.98]";
+export const inputCls = "min-h-14 w-full rounded-xl border-2 border-input bg-card px-4 py-3 text-base outline-none focus:border-primary";
+export const btnPrimary = "inline-flex h-16 w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 text-lg font-bold text-primary-foreground shadow-tool active:scale-[0.98] disabled:opacity-50";
+export const btnSecondary = "inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border-2 border-border bg-card px-4 py-3 font-semibold active:scale-[0.98]";
 
 export function ListLink({ to, params, children }: { to: string; params?: Record<string, string>; children: ReactNode }) {
   return (
-    <Link to={to as any} params={params as any} className="flex items-center gap-3 rounded-2xl border-2 border-border bg-card p-3 active:bg-muted">
+    <Link to={to as any} params={params as any} className="flex min-h-20 items-center gap-3 rounded-2xl border-2 border-border bg-card p-3 active:bg-muted">
       {children}
     </Link>
   );

@@ -20,6 +20,7 @@ export const Route = createFileRoute("/alta")({
 
 function QuickAdd() {
   const nav = useNavigate();
+  const { foto } = Route.useSearch();
   const [kind, setKind] = useState<Kind>("P");
   const [code, setCode] = useState("");
   const [photos, setPhotos] = useState<number[]>([]);
@@ -28,6 +29,9 @@ function QuickAdd() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => { peekCode(kind).then(setCode); }, [kind, saving]);
+  useEffect(() => {
+    if (foto) setPhotos((current) => current.includes(foto) ? current : [...current, foto]);
+  }, [foto]);
 
   async function save(another: boolean) {
     setSaving(true);

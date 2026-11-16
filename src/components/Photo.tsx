@@ -22,27 +22,36 @@ export function PhotoPicker({ value, onChange }: { value: number[]; onChange: (i
   const ref = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
   return (
-    <div className="flex flex-wrap gap-2">
-      {value.map((id) => (
-        <div key={id} className="relative">
-          <PhotoView id={id} className="size-24 rounded-lg" />
-          <button type="button" aria-label="Quitar foto" onClick={() => onChange(value.filter((v) => v !== id))}
-            className="absolute -right-2 -top-2 grid size-7 place-items-center rounded-full bg-foreground text-background">
-            <X className="size-4" />
-          </button>
-        </div>
-      ))}
-      <button type="button" onClick={() => ref.current?.click()} disabled={busy}
-        className="grid size-24 place-items-center rounded-lg border-2 border-dashed border-primary text-primary">
-        <Camera className="size-8" />
-      </button>
-      <input ref={ref} type="file" accept="image/*" capture="environment" hidden
-        onChange={async (e) => {
-          const f = e.target.files?.[0]; e.target.value = "";
-          if (!f) return;
-          setBusy(true);
-          try { onChange([...value, await savePhoto(f)]); } finally { setBusy(false); }
-        }} />
+    <div>
+      <div className="flex flex-wrap gap-3" aria-busy={busy}>
+        {value.map((id) => (
+          <div key={id} className="relative">
+            <PhotoView id={id} className="size-28 rounded-xl" />
+            <button type="button" aria-label="Quitar foto" onClick={() => onChange(value.filter((v) => v !== id))}
+              className="absolute -right-3 -top-3 grid size-11 place-items-center rounded-full border-2 border-background bg-foreground text-background">
+              <X className="size-5" />
+            </button>
+          </div>
+        ))}
+        <button type="button" aria-label={busy ? "Comprimiendo foto" : "Hacer o elegir foto"} onClick={() => ref.current?.click()} disabled={busy}
+          className="grid size-28 place-items-center rounded-xl border-2 border-dashed border-primary text-primary disabled:opacity-60">
+          {busy ? <LoaderCircle className="size-8 animate-spin" /> : <Camera className="size-9" />}
+        </button>
+        <input ref={ref} type="file" accept="image/*" capture="environment" hidden
+          onChange={async (e) => {
+            const f = e.target.files?.[0]; e.target.value = "";
+            if (!f) return;
+            setBusy(true);
+            try {
+              onChange([...value, await savePhoto(f)]);
+            } catch {
+              toast.error("No se pudo comprimir la foto. Prueba con otra imagen.");
+            } finally {
+              setBusy(false);
+            }
+          }} />
+      </div>
+      {busy && <p className="mt-2 text-sm font-semibold text-muted-foreground" role="status">Comprimiendo foto para ocupar menos espacio…</p>}
     </div>
   );
 }

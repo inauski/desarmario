@@ -4,6 +4,7 @@ import { AlertTriangle, Boxes, Camera, Hammer, ListOrdered, Package, PackageOpen
 import { db, getProject } from "@/lib/db";
 import { needsBackup } from "@/lib/backup";
 import { PhotoView } from "@/components/Photo";
+import { InstallAppCard } from "@/components/InstallAppCard";
 
 export const Route = createFileRoute("/")({
   head: () => ({
