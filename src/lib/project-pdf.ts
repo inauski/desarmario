@@ -55,6 +55,8 @@ class Writer {
 
   space(height: number) { this.y -= height; }
 
+  keepTogether(height: number) { this.ensure(height); }
+
   paragraph(value: string, options: { size?: number; bold?: boolean; indent?: number; color?: ReturnType<typeof rgb>; lineHeight?: number } = {}) {
     const size = options.size ?? 10;
     const font = options.bold ? this.bold : this.regular;
@@ -108,6 +110,7 @@ export async function generateProjectPdf(data: ProjectPdfData) {
   writer.heading("Piezas", 19);
   if (!data.pieces.length) writer.paragraph("No hay piezas registradas.");
   [...data.pieces].sort((a, b) => a.code.localeCompare(b.code)).forEach((piece) => {
+    writer.keepTogether(130);
     const box = boxById.get(piece.boxId ?? -1);
     writer.heading(`${piece.code} · ${piece.name || "Sin nombre"}`, 13);
     writer.paragraph(`Estado: ${piece.state} · Caja: ${box ? `${box.code}${box.location ? ` (${box.location})` : ""}` : "sin caja"}`, { indent: 10 });
@@ -121,6 +124,7 @@ export async function generateProjectPdf(data: ProjectPdfData) {
   writer.heading("Uniones", 19);
   if (!data.joints.length) writer.paragraph("No hay uniones registradas.");
   [...data.joints].sort((a, b) => (a.id ?? 0) - (b.id ?? 0)).forEach((joint) => {
+    writer.keepTogether(115);
     const pieces = joint.pieceIds.map((id) => pieceById.get(id)?.code).filter(Boolean).join(" + ");
     const bag = bagById.get(joint.bagId ?? -1);
     writer.heading(`${jointLabel(joint.id)} · ${joint.quantity} × ${joint.type}`, 13);
@@ -134,6 +138,7 @@ export async function generateProjectPdf(data: ProjectPdfData) {
   writer.heading("Pasos", 19);
   if (!data.steps.length) writer.paragraph("No hay pasos registrados.");
   [...data.steps].sort((a, b) => a.order - b.order).forEach((step) => {
+    writer.keepTogether(155);
     const pieces = step.pieceIds.map((id) => pieceById.get(id)?.code).filter(Boolean).join(", ");
     const bags = step.bagIds.map((id) => bagById.get(id)?.code).filter(Boolean).join(", ");
     writer.heading(`Paso ${step.order} · ${step.title || "Sin título"}`, 13);
