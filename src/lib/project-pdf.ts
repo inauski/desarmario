@@ -63,7 +63,7 @@ class Writer {
     const lines = wrapText(value, font, size, this.width - this.margin * 2 - indent);
     for (const line of lines) {
       this.ensure(lineHeight);
-      if (line) this.page!.drawText(line, { x: this.margin + indent, y: this.y - size, size, font, color: options.color });
+      if (line) this.page!.drawText(line, { x: this.margin + indent, y: this.y - size, size, font, ...(options.color ? { color: options.color } : {}) });
       this.y -= lineHeight;
     }
   }

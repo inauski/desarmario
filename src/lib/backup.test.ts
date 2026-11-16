@@ -1,5 +1,5 @@
 import "fake-indexeddb/auto";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { db, exportBackup, importBackup } from "@/lib/db";
 import { needsBackup, THREE_DAYS_MS } from "@/lib/backup";
 
@@ -22,8 +22,19 @@ describe("aviso de copia de seguridad", () => {
 
 describe("copia JSON completa", () => {
   beforeEach(async () => {
+    vi.stubGlobal("FileReader", class {
+      onload: (() => void) | null = null;
+      result: string | null = null;
+      async readAsDataURL(blob: Blob) {
+        const bytes = Buffer.from(await blob.arrayBuffer());
+        this.result = `data:${blob.type};base64,${bytes.toString("base64")}`;
+        this.onload?.();
+      }
+    });
     await Promise.all([db.project.clear(), db.pieces.clear(), db.bags.clear(), db.boxes.clear(), db.joints.clear(), db.steps.clear(), db.tools.clear(), db.photos.clear(), db.counters.clear()]);
   });
+
+  afterEach(() => vi.unstubAllGlobals());
 
   it("exporta y restaura herramientas y fotos", async () => {
     await db.project.put({ id: 1, name: "Armario prueba", description: "", photoIds: [] });
