@@ -66,7 +66,7 @@ function Home() {
         <Tile to="/pasos" icon={<ListOrdered />} label="Pasos" />
         <Tile to="/desmontaje" icon={<Hammer />} label="Desmontaje" />
         <Tile to="/montaje" icon={<PackageOpen />} label="Montaje" />
-        <Tile icon={<QrCode />} label="Etiquetas" soon />
+        <Tile to="/etiquetas" icon={<QrCode />} label="Etiquetas" />
         <Tile icon={<Wrench />} label="Herramientas" soon />
       </div>
       <Link to="/ajustes" className="mt-6 block text-center text-sm font-semibold text-muted-foreground underline">Copia de seguridad</Link>
@@ -74,7 +74,7 @@ function Home() {
   );
 }
 
-function Tile({ to, icon, label, soon }: { to?: "/piezas" | "/cajas" | "/pasos" | "/desmontaje" | "/montaje"; icon: React.ReactNode; label: string; soon?: boolean }) {
+function Tile({ to, icon, label, soon }: { to?: "/piezas" | "/cajas" | "/pasos" | "/desmontaje" | "/montaje" | "/etiquetas"; icon: React.ReactNode; label: string; soon?: boolean }) {
   const cls = "flex h-28 flex-col justify-between rounded-3xl border-2 border-border bg-card p-4 [&_svg]:size-7";
   if (soon || !to) return (
     <div className={cls + " opacity-45"}>{icon}<div><p className="font-bold">{label}</p><p className="text-xs">Próximamente</p></div></div>
