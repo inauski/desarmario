@@ -22,7 +22,7 @@ export default defineConfig({
         injectRegister: null,
         manifest: false,
         devOptions: { enabled: false },
-        includeAssets: ["favicon.ico", "icon-192.png", "icon-512.png", "apple-touch-icon.png"],
+        includeAssets: ["favicon.svg", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png"],
         workbox: {
           cleanupOutdatedCaches: true,
           clientsClaim: true,
