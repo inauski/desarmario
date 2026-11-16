@@ -1,5 +1,5 @@
 import "fake-indexeddb/auto";
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { BoxSelect } from "./BoxSelect";
@@ -47,8 +47,9 @@ describe("selector de caja", () => {
     vi.stubGlobal("prompt", () => null);
     const onChange = vi.fn();
     render(<Harness onChange={onChange} />);
-    fireEvent.click(screen.getByRole("button", { name: /crear caja/i }));
-    await new Promise((r) => setTimeout(r, 0));
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /crear caja/i }));
+    });
     expect(onChange).not.toHaveBeenCalled();
     expect(await db.boxes.count()).toBe(0);
   });
