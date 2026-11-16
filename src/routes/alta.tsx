@@ -11,9 +11,10 @@ type Kind = "P" | "B" | "C";
 const LABEL: Record<Kind, string> = { P: "Pieza", B: "Bolsa", C: "Caja" };
 
 export const Route = createFileRoute("/alta")({
-  validateSearch: (search: Record<string, unknown>): { foto?: number } => ({
-    foto: typeof search.foto === "number" && Number.isInteger(search.foto) && search.foto > 0 ? search.foto : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { foto?: number } => {
+    const foto = search["foto"];
+    return typeof foto === "number" && Number.isInteger(foto) && foto > 0 ? { foto } : {};
+  },
   head: () => ({ meta: [{ title: "Alta rápida — Armario" }, { name: "description", content: "Foto, código y guardar en segundos." }, { property: "og:title", content: "Alta rápida — Armario" }, { property: "og:description", content: "Foto, código y guardar en segundos." }] }),
   component: QuickAdd,
 });
