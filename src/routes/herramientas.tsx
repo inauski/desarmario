@@ -21,7 +21,7 @@ export const Route = createFileRoute("/herramientas")({
 });
 
 function ToolsPage() {
-  const tools = useLiveQuery(() => db.tools.orderBy("createdAt").toArray()) ?? [];
+  const tools = useLiveQuery(() => db.tools.toArray()) ?? [];
   const [name, setName] = useState("");
   const [size, setSize] = useState("");
   const prepared = tools.filter((tool) => tool.prepared).length;
