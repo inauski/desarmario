@@ -28,3 +28,5 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- All app data lives on-device in Dexie (src/lib/db.ts), photos as compressed Blobs; no backend, so access only from effects/live queries in the browser.
