@@ -10,16 +10,17 @@ export function downloadBlob(blob: Blob, filename: string) {
 }
 
 /** En pantallas táctiles abre Guardar en Archivos cuando el navegador lo permite. */
-export async function deliverFile(blob: Blob, filename: string) {
+export async function deliverFile(blob: Blob, filename: string): Promise<boolean> {
   const file = new File([blob], filename, { type: blob.type });
   const touch = matchMedia("(pointer: coarse)").matches;
   if (touch && navigator.canShare?.({ files: [file] })) {
     try {
       await navigator.share({ files: [file], title: filename });
-      return;
+      return true;
     } catch (error) {
-      if ((error as DOMException).name === "AbortError") return;
+      if ((error as DOMException).name === "AbortError") return false;
     }
   }
   downloadBlob(blob, filename);
+  return true;
 }

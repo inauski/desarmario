@@ -139,14 +139,14 @@ function blobToDataUrl(b: Blob): Promise<string> {
 
 export async function exportBackup() {
   const exportedAt = new Date();
-  await db.project.put({ ...(await getProject()), lastBackupAt: exportedAt.getTime() });
+  const project = { ...(await getProject()), lastBackupAt: exportedAt.getTime() };
   const photos = await db.photos.toArray();
   return {
     joints: await db.joints.toArray(),
     steps: await db.steps.toArray(),
     tools: await db.tools.toArray(),
     app: "armario", version: 2, exportedAt: exportedAt.toISOString(),
-    project: await db.project.toArray(), pieces: await db.pieces.toArray(), bags: await db.bags.toArray(),
+    project: [project], pieces: await db.pieces.toArray(), bags: await db.bags.toArray(),
     boxes: await db.boxes.toArray(), counters: await db.counters.toArray(),
     photos: await Promise.all(photos.map(async (p) => ({ id: p.id, createdAt: p.createdAt, data: await blobToDataUrl(p.blob) }))),
   };
