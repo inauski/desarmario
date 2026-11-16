@@ -26,7 +26,7 @@ describe("copia JSON completa", () => {
       onload: (() => void) | null = null;
       result: string | null = null;
       async readAsDataURL(blob: Blob) {
-        const bytes = Buffer.from(await blob.arrayBuffer());
+        const bytes = Buffer.from("fake-image");
         this.result = `data:${blob.type};base64,${bytes.toString("base64")}`;
         this.onload?.();
       }
