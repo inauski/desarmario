@@ -26,7 +26,7 @@ function PieceDetail() {
       <div className="space-y-5">
         {box && <div className="rounded-2xl bg-success p-4 font-bold text-success-foreground">Guardada en caja <Code>{box.code}</Code> {box.location && `· ${box.location}`}</div>}
         <PhotoPicker value={piece.photoIds} onChange={(photoIds) => set({ photoIds })} />
-        <Field label="Estado">
+        <Field group label="Estado">
           <div className="grid grid-cols-3 gap-2">
             {PIECE_STATES.map((s) => (
               <button key={s} onClick={() => set({ state: s })} className={cn("h-12 rounded-xl border-2 font-bold capitalize", piece.state === s ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card")}>{s}</button>

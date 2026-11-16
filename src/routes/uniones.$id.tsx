@@ -25,7 +25,7 @@ function JointDetail() {
   return (
     <Page title="Unión" back action={<Code className="text-lg">{jointLabel(joint.id)}</Code>}>
       <div className="space-y-5">
-        <Field label={`Piezas que une (${joint.pieceIds.length})`}>
+        <Field group label={`Piezas que une (${joint.pieceIds.length})`}>
           {joint.pieceIds.length < 2 && <p className="mb-2 text-sm font-semibold text-destructive">Selecciona al menos 2 piezas</p>}
           <div className="flex flex-wrap gap-2">
             {pieces.map((p) => (
@@ -36,7 +36,7 @@ function JointDetail() {
             ))}
           </div>
         </Field>
-        <Field label="Tipo de fijación">
+        <Field group label="Tipo de fijación">
           <div className="grid grid-cols-3 gap-2">
             {JOINT_TYPES.map((t) => (
               <button key={t} type="button" onClick={() => set({ type: t })} className={cn("h-12 rounded-xl border-2 font-bold capitalize", joint.type === t ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card")}>{t}</button>
@@ -44,9 +44,9 @@ function JointDetail() {
           </div>
         </Field>
         <Field label="Cantidad"><input type="number" inputMode="numeric" className={inputCls} defaultValue={joint.quantity} onBlur={(e) => set({ quantity: Number(e.target.value) || 0 })} /></Field>
-        <Field label="Foto de detalle"><PhotoPicker value={joint.photoIds} onChange={(photoIds) => set({ photoIds })} /></Field>
+        <Field group label="Foto de detalle"><PhotoPicker value={joint.photoIds} onChange={(photoIds) => set({ photoIds })} /></Field>
         <Field label="Notas"><textarea className={inputCls} rows={3} defaultValue={joint.notes} onBlur={(e) => set({ notes: e.target.value })} /></Field>
-        <Field label="Bolsa asociada">
+        <Field group label="Bolsa asociada">
           {bag ? (
             <Link to="/bolsas/$id" params={{ id: String(bag.id) }} className="flex items-center gap-3 rounded-2xl border-2 border-border bg-card p-3">
               <Code>{bag.code}</Code><span className="flex-1 truncate text-sm">{bag.content}</span>
