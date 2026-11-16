@@ -5,6 +5,7 @@ import { db, getProject } from "@/lib/db";
 import { needsBackup } from "@/lib/backup";
 import { PhotoView } from "@/components/Photo";
 import { InstallAppCard } from "@/components/InstallAppCard";
+import { HelpButton } from "@/components/HelpDialog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -36,14 +37,17 @@ function Home() {
 
   return (
     <div className="mx-auto max-w-xl px-4 pb-32 pt-6">
-      <Link to="/proyecto" className="mb-5 flex items-center gap-3">
-        <PhotoView id={project?.photoIds[0]} className="size-14 rounded-xl" />
-        <div className="flex-1">
-          <p className="text-xs font-bold uppercase tracking-widest text-primary">Proyecto</p>
-          <h1 className="font-display text-2xl font-extrabold leading-tight">{project?.name ?? "Mi armario"}</h1>
-        </div>
-        <Settings className="size-5 text-muted-foreground" />
-      </Link>
+      <div className="mb-5 flex items-center gap-2">
+        <Link to="/proyecto" className="flex min-w-0 flex-1 items-center gap-3">
+          <PhotoView id={project?.photoIds[0]} className="size-14 shrink-0 rounded-xl" />
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary">Proyecto</p>
+            <h1 className="font-display text-2xl font-extrabold leading-tight">{project?.name ?? "Mi armario"}</h1>
+          </div>
+          <Settings className="size-5 shrink-0 text-muted-foreground" />
+        </Link>
+        <HelpButton />
+      </div>
 
       {backupWarning && (
         <Link to="/ajustes" className="mb-5 flex items-center gap-3 rounded-2xl bg-warning p-4 text-warning-foreground">
