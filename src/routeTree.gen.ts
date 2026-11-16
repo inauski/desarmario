@@ -10,33 +10,91 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BolsasIdRouteImport } from './routes/bolsas.$id'
+import { Route as CajasIndexRouteImport } from './routes/cajas.index'
+import { Route as CajasIdRouteImport } from './routes/cajas.$id'
+import { Route as PiezasIndexRouteImport } from './routes/piezas.index'
+import { Route as PiezasIdRouteImport } from './routes/piezas.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BolsasIdRoute = BolsasIdRouteImport.update({
+  id: '/bolsas/$id',
+  path: '/bolsas/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CajasIndexRoute = CajasIndexRouteImport.update({
+  id: '/cajas/',
+  path: '/cajas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CajasIdRoute = CajasIdRouteImport.update({
+  id: '/cajas/$id',
+  path: '/cajas/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PiezasIndexRoute = PiezasIndexRouteImport.update({
+  id: '/piezas/',
+  path: '/piezas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PiezasIdRoute = PiezasIdRouteImport.update({
+  id: '/piezas/$id',
+  path: '/piezas/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bolsas/$id': typeof BolsasIdRoute
+  '/cajas/$id': typeof CajasIdRoute
+  '/piezas/$id': typeof PiezasIdRoute
+  '/cajas/': typeof CajasIndexRoute
+  '/piezas/': typeof PiezasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bolsas/$id': typeof BolsasIdRoute
+  '/cajas/$id': typeof CajasIdRoute
+  '/piezas/$id': typeof PiezasIdRoute
+  '/cajas': typeof CajasIndexRoute
+  '/piezas': typeof PiezasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bolsas/$id': typeof BolsasIdRoute
+  '/cajas/$id': typeof CajasIdRoute
+  '/piezas/$id': typeof PiezasIdRoute
+  '/cajas/': typeof CajasIndexRoute
+  '/piezas/': typeof PiezasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/bolsas/$id' | '/cajas/$id' | '/piezas/$id' | '/cajas/' | '/piezas/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/bolsas/$id' | '/cajas/$id' | '/piezas/$id' | '/cajas' | '/piezas'
+  id:
+    | '__root__'
+    | '/'
+    | '/bolsas/$id'
+    | '/cajas/$id'
+    | '/piezas/$id'
+    | '/cajas/'
+    | '/piezas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BolsasIdRoute: typeof BolsasIdRoute
+  CajasIdRoute: typeof CajasIdRoute
+  PiezasIdRoute: typeof PiezasIdRoute
+  CajasIndexRoute: typeof CajasIndexRoute
+  PiezasIndexRoute: typeof PiezasIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +106,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bolsas/$id': {
+      id: '/bolsas/$id'
+      path: '/bolsas/$id'
+      fullPath: '/bolsas/$id'
+      preLoaderRoute: typeof BolsasIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cajas/': {
+      id: '/cajas/'
+      path: '/cajas'
+      fullPath: '/cajas/'
+      preLoaderRoute: typeof CajasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cajas/$id': {
+      id: '/cajas/$id'
+      path: '/cajas/$id'
+      fullPath: '/cajas/$id'
+      preLoaderRoute: typeof CajasIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/piezas/': {
+      id: '/piezas/'
+      path: '/piezas'
+      fullPath: '/piezas/'
+      preLoaderRoute: typeof PiezasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/piezas/$id': {
+      id: '/piezas/$id'
+      path: '/piezas/$id'
+      fullPath: '/piezas/$id'
+      preLoaderRoute: typeof PiezasIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BolsasIdRoute: BolsasIdRoute,
+  CajasIdRoute: CajasIdRoute,
+  PiezasIdRoute: PiezasIdRoute,
+  CajasIndexRoute: CajasIndexRoute,
+  PiezasIndexRoute: PiezasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
