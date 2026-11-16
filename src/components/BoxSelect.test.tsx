@@ -35,11 +35,12 @@ describe("selector de caja", () => {
     render(<Harness onChange={onChange} />);
     fireEvent.click(screen.getByRole("button", { name: /crear caja/i }));
     await waitFor(() => expect(onChange).toHaveBeenCalled());
-    const id = onChange.mock.calls[0][0] as number;
-    const box = await db.boxes.get(id);
-    expect(box?.code).toBe("C-1");
-    expect(box?.location).toBe("Trastero");
-    await waitFor(() => expect(screen.getByRole("combobox")).toHaveValue(String(id)));
+    const boxes = await db.boxes.toArray();
+    expect(boxes.length).toBe(1);
+    const box = boxes[0]!;
+    expect(box.code).toBe("C-1");
+    expect(box.location).toBe("Trastero");
+    await waitFor(() => expect(screen.getByRole("combobox")).toHaveValue(String(box.id)));
     expect(screen.getByRole("option", { name: /C-1 · Trastero/ })).toBeInTheDocument();
   });
 
