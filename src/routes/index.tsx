@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useLiveQuery } from "dexie-react-hooks";
-import { Boxes, Camera, Hammer, ListOrdered, Package, QrCode, Settings, Wrench } from "lucide-react";
+import { Boxes, Camera, Hammer, ListOrdered, Package, PackageOpen, QrCode, Settings, Wrench } from "lucide-react";
 import { db, getProject } from "@/lib/db";
 import { PhotoView } from "@/components/Photo";
 
@@ -11,6 +11,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Registra piezas, bolsas y cajas con fotos y códigos para volver a montar tu armario." },
       { property: "og:title", content: "Armario — desmonta y monta sin perder nada" },
       { property: "og:description", content: "Piezas, bolsas y cajas con fotos y códigos, en tu móvil y sin conexión." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Home,
@@ -19,10 +21,14 @@ export const Route = createFileRoute("/")({
 function Home() {
   const project = useLiveQuery(getProject);
   const pieces = useLiveQuery(() => db.pieces.toArray()) ?? [];
+  const steps = useLiveQuery(() => db.steps.toArray()) ?? [];
   const bags = useLiveQuery(() => db.bags.count()) ?? 0;
   const boxes = useLiveQuery(() => db.boxes.count()) ?? 0;
   const done = pieces.filter((p) => p.state !== "montada").length;
-  const pct = pieces.length ? Math.round((done / pieces.length) * 100) : 0;
+  const stepsDone = steps.filter((step) => step.done).length;
+  const stepsAssembled = steps.filter((step) => step.assembled).length;
+  const pct = steps.length ? Math.round((stepsDone / steps.length) * 100) : 0;
+  const assemblyPct = steps.length ? Math.round((stepsAssembled / steps.length) * 100) : 0;
 
   return (
     <div className="mx-auto max-w-xl px-4 pb-32 pt-6">
@@ -37,11 +43,17 @@ function Home() {
 
       <section className="mb-6 rounded-3xl bg-foreground p-5 text-background">
         <p className="text-sm opacity-70">Desmontaje</p>
-        <p className="font-display text-4xl font-extrabold">{done}<span className="text-xl opacity-60"> / {pieces.length} piezas</span></p>
+        <p className="font-display text-4xl font-extrabold">{stepsDone}<span className="text-xl opacity-60"> / {steps.length} pasos</span></p>
         <div className="mt-3 h-3 overflow-hidden rounded-full bg-background/20">
           <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${pct}%` }} />
         </div>
-        <p className="mt-3 text-sm opacity-70">{bags} bolsas · {boxes} cajas</p>
+        {!!steps.length && (
+          <div className="mt-4">
+            <div className="mb-1 flex justify-between text-sm"><span className="opacity-70">Montaje</span><span className="font-bold">{stepsAssembled} / {steps.length}</span></div>
+            <div className="h-2 overflow-hidden rounded-full bg-background/20"><div className="h-full rounded-full bg-success transition-all" style={{ width: `${assemblyPct}%` }} /></div>
+          </div>
+        )}
+        <p className="mt-3 text-sm opacity-70">{done} de {pieces.length} piezas · {bags} bolsas · {boxes} cajas</p>
       </section>
 
       <Link to="/alta" className="mb-4 flex h-20 items-center justify-center gap-3 rounded-3xl bg-primary text-xl font-extrabold text-primary-foreground shadow-tool">
@@ -51,8 +63,9 @@ function Home() {
       <div className="grid grid-cols-2 gap-3">
         <Tile to="/piezas" icon={<Package />} label="Piezas" />
         <Tile to="/cajas" icon={<Boxes />} label="Cajas y bolsas" />
-        <Tile icon={<Hammer />} label="Desmontaje" soon />
-        <Tile icon={<ListOrdered />} label="Montaje" soon />
+        <Tile to="/pasos" icon={<ListOrdered />} label="Pasos" />
+        <Tile to="/desmontaje" icon={<Hammer />} label="Desmontaje" />
+        <Tile to="/montaje" icon={<PackageOpen />} label="Montaje" />
         <Tile icon={<QrCode />} label="Etiquetas" soon />
         <Tile icon={<Wrench />} label="Herramientas" soon />
       </div>
@@ -61,7 +74,7 @@ function Home() {
   );
 }
 
-function Tile({ to, icon, label, soon }: { to?: "/piezas" | "/cajas"; icon: React.ReactNode; label: string; soon?: boolean }) {
+function Tile({ to, icon, label, soon }: { to?: "/piezas" | "/cajas" | "/pasos" | "/desmontaje" | "/montaje"; icon: React.ReactNode; label: string; soon?: boolean }) {
   const cls = "flex h-28 flex-col justify-between rounded-3xl border-2 border-border bg-card p-4 [&_svg]:size-7";
   if (soon || !to) return (
     <div className={cls + " opacity-45"}>{icon}<div><p className="font-bold">{label}</p><p className="text-xs">Próximamente</p></div></div>

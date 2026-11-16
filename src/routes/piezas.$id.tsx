@@ -48,7 +48,7 @@ function PieceDetail() {
         <Field label="Medidas"><input className={inputCls} defaultValue={piece.measures} placeholder="Ej. 180 x 50 cm" onBlur={(e) => set({ measures: e.target.value })} /></Field>
         <Field label="Orientación"><textarea className={inputCls} rows={2} defaultValue={piece.orientation} placeholder="Cuál es arriba, frente, cara vista" onBlur={(e) => set({ orientation: e.target.value })} /></Field>
         <Field label="Notas"><textarea className={inputCls} rows={3} defaultValue={piece.notes} onBlur={(e) => set({ notes: e.target.value })} /></Field>
-        <button onClick={async () => { if (confirm(`¿Borrar ${piece.code}?`)) { await db.joints.where("pieceIds").equals(piece.id!).modify((j) => { j.pieceIds = j.pieceIds.filter((x) => x !== piece.id); }); await db.pieces.delete(piece.id!); nav({ to: "/piezas" }); } }}
+        <button onClick={async () => { if (confirm(`¿Borrar ${piece.code}?`)) { await db.joints.where("pieceIds").equals(piece.id!).modify((j) => { j.pieceIds = j.pieceIds.filter((x) => x !== piece.id); }); await db.steps.where("pieceIds").equals(piece.id!).modify((step) => { step.pieceIds = step.pieceIds.filter((x) => x !== piece.id); }); await db.pieces.delete(piece.id!); nav({ to: "/piezas" }); } }}
           className="flex w-full items-center justify-center gap-2 py-3 font-semibold text-destructive"><Trash2 className="size-4" /> Borrar pieza</button>
       </div>
     </Page>

@@ -19,6 +19,10 @@ export interface Joint {
   id?: number; pieceIds: number[]; type: JointType; quantity: number; photoIds: number[];
   notes: string; bagId: number | null; createdAt: number;
 }
+export interface Step {
+  id?: number; order: number; title: string; description: string; photoIds: number[];
+  tools: string[]; pieceIds: number[]; bagIds: number[]; done: boolean; assembled: boolean; createdAt: number;
+}
 export interface Photo { id?: number; blob: Blob; createdAt: number }
 export interface Counter { kind: "P" | "B" | "C"; value: number }
 
@@ -28,6 +32,7 @@ class ArmarioDB extends Dexie {
   bags!: Table<Bag, number>;
   boxes!: Table<Box, number>;
   joints!: Table<Joint, number>;
+  steps!: Table<Step, number>;
   photos!: Table<Photo, number>;
   counters!: Table<Counter, string>;
   constructor() {
@@ -41,6 +46,7 @@ class ArmarioDB extends Dexie {
       counters: "kind",
     });
     this.version(2).stores({ joints: "++id, *pieceIds, bagId" });
+    this.version(3).stores({ steps: "++id, order, done, assembled, *pieceIds, *bagIds" });
   }
 }
 
@@ -132,6 +138,7 @@ export async function exportBackup() {
   const photos = await db.photos.toArray();
   return {
     joints: await db.joints.toArray(),
+    steps: await db.steps.toArray(),
     app: "armario", version: 1, exportedAt: new Date().toISOString(),
     project: await db.project.toArray(), pieces: await db.pieces.toArray(), bags: await db.bags.toArray(),
     boxes: await db.boxes.toArray(), counters: await db.counters.toArray(),
@@ -142,9 +149,11 @@ export async function exportBackup() {
 export async function importBackup(data: any) {
   if (data?.app !== "armario") throw new Error("Archivo no válido");
   const photos = await Promise.all((data.photos ?? []).map(async (p: any) => ({ id: p.id, createdAt: p.createdAt, blob: await (await fetch(p.data)).blob() })));
-  await db.transaction("rw", [db.project, db.joints, db.pieces, db.bags, db.boxes, db.photos, db.counters], async () => {
+  await db.transaction("rw", [db.project, db.joints, db.steps, db.pieces, db.bags, db.boxes, db.photos, db.counters], async () => {
     await db.joints.clear();
     await db.joints.bulkAdd(data.joints ?? []);
+    await db.steps.clear();
+    await db.steps.bulkAdd((data.steps ?? []).map((step: any) => ({ ...step, assembled: step.assembled ?? false })));
     await Promise.all([db.project.clear(), db.pieces.clear(), db.bags.clear(), db.boxes.clear(), db.photos.clear(), db.counters.clear()]);
     await db.project.bulkAdd(data.project ?? []);
     await db.pieces.bulkAdd(data.pieces ?? []);
