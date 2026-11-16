@@ -59,7 +59,7 @@ function StepDetail() {
         <Field group label={`Bolsas generadas (${step.bagIds.length})`}>
           <div className="flex flex-wrap gap-2">
             {bags.map((bag) => (
-              <button type="button" key={bag.id} onClick={() => toggle("bagIds", bag.id!)} className={cn("rounded-xl border-2 px-3 py-2 text-left text-sm", step.bagIds.includes(bag.id!) ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card")}>
+              <button type="button" key={bag.id} onClick={() => toggle("bagIds", bag.id!)} className={cn("min-h-12 rounded-xl border-2 px-4 py-2 text-left text-sm", step.bagIds.includes(bag.id!) ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card")}>
                 <span className="font-mono font-bold">{bag.code}</span> {bag.content}
               </button>
             ))}

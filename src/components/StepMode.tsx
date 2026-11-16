@@ -72,10 +72,12 @@ export function StepMode({ mode }: { mode: "desmontaje" | "montaje" }) {
           <div className="mb-5"><StepItems step={current} assembly={isAssembly} /></div>
           {!isAssembly && <div className="mb-5"><StepItemCreator stepId={current.id!} /></div>}
 
-          <button type="button" aria-pressed={isComplete(current)} onClick={toggleComplete} className={cn(btnPrimary, "h-20 text-2xl", isComplete(current) && "bg-success text-success-foreground shadow-none")}>
-            <Check className="size-8" />{isAssembly ? "Montado" : "Hecho"}{isComplete(current) && " ✓"}
-          </button>
-          {isComplete(current) && <p className="mt-2 text-center text-xs text-muted-foreground">Pulsa de nuevo para deshacer.</p>}
+          <div className="sticky bottom-24 z-30 -mx-1 rounded-2xl bg-background/95 p-2 backdrop-blur">
+            <button type="button" aria-pressed={isComplete(current)} onClick={toggleComplete} className={cn(btnPrimary, "h-20 text-2xl", isComplete(current) && "bg-success text-success-foreground shadow-none")}>
+              <Check className="size-8" />{isAssembly ? "Montado" : "Hecho"}{isComplete(current) && " ✓"}
+            </button>
+            {isComplete(current) && <p className="mt-1 text-center text-sm text-muted-foreground">Pulsa de nuevo para deshacer.</p>}
+          </div>
 
           <div className="mt-5 grid grid-cols-2 gap-3">
             <button type="button" className={btnSecondary} disabled={index <= 0} onClick={() => setCurrentId(steps[index - 1]?.id)}><ChevronLeft className="size-5" /> Anterior</button>
