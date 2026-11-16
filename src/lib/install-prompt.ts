@@ -42,3 +42,6 @@ export async function showInstallPrompt() {
   await prompt.prompt();
   return (await prompt.userChoice).outcome;
 }
+
+// Listen as soon as the client module loads so a fast browser event is not missed before hydration.
+if (typeof window !== "undefined") setupInstallPrompt();
