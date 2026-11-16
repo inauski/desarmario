@@ -10,6 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AjustesRouteImport } from './routes/ajustes'
+import { Route as AltaRouteImport } from './routes/alta'
+import { Route as ProyectoRouteImport } from './routes/proyecto'
 import { Route as BolsasIdRouteImport } from './routes/bolsas.$id'
 import { Route as CajasIndexRouteImport } from './routes/cajas.index'
 import { Route as CajasIdRouteImport } from './routes/cajas.$id'
@@ -19,6 +22,21 @@ import { Route as PiezasIdRouteImport } from './routes/piezas.$id'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AjustesRoute = AjustesRouteImport.update({
+  id: '/ajustes',
+  path: '/ajustes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AltaRoute = AltaRouteImport.update({
+  id: '/alta',
+  path: '/alta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProyectoRoute = ProyectoRouteImport.update({
+  id: '/proyecto',
+  path: '/proyecto',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BolsasIdRoute = BolsasIdRouteImport.update({
@@ -49,6 +67,9 @@ const PiezasIdRoute = PiezasIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ajustes': typeof AjustesRoute
+  '/alta': typeof AltaRoute
+  '/proyecto': typeof ProyectoRoute
   '/bolsas/$id': typeof BolsasIdRoute
   '/cajas/$id': typeof CajasIdRoute
   '/piezas/$id': typeof PiezasIdRoute
@@ -57,6 +78,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ajustes': typeof AjustesRoute
+  '/alta': typeof AltaRoute
+  '/proyecto': typeof ProyectoRoute
   '/bolsas/$id': typeof BolsasIdRoute
   '/cajas/$id': typeof CajasIdRoute
   '/piezas/$id': typeof PiezasIdRoute
@@ -66,6 +90,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ajustes': typeof AjustesRoute
+  '/alta': typeof AltaRoute
+  '/proyecto': typeof ProyectoRoute
   '/bolsas/$id': typeof BolsasIdRoute
   '/cajas/$id': typeof CajasIdRoute
   '/piezas/$id': typeof PiezasIdRoute
@@ -75,12 +102,32 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/bolsas/$id' | '/cajas/$id' | '/piezas/$id' | '/cajas/' | '/piezas/'
+    | '/'
+    | '/ajustes'
+    | '/alta'
+    | '/proyecto'
+    | '/bolsas/$id'
+    | '/cajas/$id'
+    | '/piezas/$id'
+    | '/cajas/'
+    | '/piezas/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bolsas/$id' | '/cajas/$id' | '/piezas/$id' | '/cajas' | '/piezas'
+  to:
+    | '/'
+    | '/ajustes'
+    | '/alta'
+    | '/proyecto'
+    | '/bolsas/$id'
+    | '/cajas/$id'
+    | '/piezas/$id'
+    | '/cajas'
+    | '/piezas'
   id:
     | '__root__'
     | '/'
+    | '/ajustes'
+    | '/alta'
+    | '/proyecto'
     | '/bolsas/$id'
     | '/cajas/$id'
     | '/piezas/$id'
@@ -90,6 +137,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AjustesRoute: typeof AjustesRoute
+  AltaRoute: typeof AltaRoute
+  ProyectoRoute: typeof ProyectoRoute
   BolsasIdRoute: typeof BolsasIdRoute
   CajasIdRoute: typeof CajasIdRoute
   PiezasIdRoute: typeof PiezasIdRoute
@@ -104,6 +154,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ajustes': {
+      id: '/ajustes'
+      path: '/ajustes'
+      fullPath: '/ajustes'
+      preLoaderRoute: typeof AjustesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/alta': {
+      id: '/alta'
+      path: '/alta'
+      fullPath: '/alta'
+      preLoaderRoute: typeof AltaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proyecto': {
+      id: '/proyecto'
+      path: '/proyecto'
+      fullPath: '/proyecto'
+      preLoaderRoute: typeof ProyectoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bolsas/$id': {
@@ -146,6 +217,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AjustesRoute: AjustesRoute,
+  AltaRoute: AltaRoute,
+  ProyectoRoute: ProyectoRoute,
   BolsasIdRoute: BolsasIdRoute,
   CajasIdRoute: CajasIdRoute,
   PiezasIdRoute: PiezasIdRoute,
