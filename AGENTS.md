@@ -33,3 +33,4 @@ use the editor.
 - Any Field whose children are interactive controls (selects, buttons, state pickers) must pass `group`, so the wrapping <label> neither forwards taps to the first control nor becomes the control's accessible name.
 - Offline support uses `vite-plugin-pwa` with `generateSW`; only `src/lib/pwa.ts` registers `/sw.js`, never in dev or Lovable previews, with NetworkFirst navigations and CacheFirst only for same-origin hashed assets.
 - `src/components/HelpDialog.tsx` must not import from `ui-bits`: `ui-bits`' `Page` renders `HelpButton`, so the import would be circular. Keep its button styles inline.
+- Each project is a separate Dexie database (name from src/lib/workspaces.ts registry in localStorage); switching reloads the page so `db` rebinds.

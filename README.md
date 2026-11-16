@@ -179,9 +179,13 @@ No edites manualmente `src/routeTree.gen.ts`: TanStack Router lo genera automát
 - El escáner QR necesita permiso de cámara y un navegador compatible.
 - Las pegatinas impresas conservan el dominio con el que fueron generadas; si cambia la dirección publicada, conviene generarlas de nuevo.
 
+## Proyectos paralelos
+
+Desde el inicio puedes crear un segundo proyecto para desmontar otro armario sin perder el primero. Cada proyecto guarda sus datos y fotos por separado; la copia de seguridad exporta el proyecto abierto.
+
 ## Licencia
 
-Licencia pendiente de definir. Si quieres permitir el uso, la modificación o la distribución del código, añade un archivo `LICENSE` con la licencia elegida.
+Software libre bajo licencia [MIT](LICENSE): puedes usarlo, copiarlo, modificarlo y distribuirlo libremente manteniendo el aviso de copyright.
 
 ---
 
