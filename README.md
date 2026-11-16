@@ -108,15 +108,15 @@ La terminal mostrará la dirección local para abrir la aplicación.
 
 ### Scripts disponibles
 
-| Comando | Descripción |
-| --- | --- |
-| `bun run dev` | Inicia el servidor de desarrollo. |
-| `bun run build` | Genera la compilación de producción. |
-| `bun run preview` | Sirve localmente la compilación de producción. |
-| `bun run test` | Ejecuta todas las pruebas una vez. |
-| `bun run test:watch` | Ejecuta las pruebas en modo observación. |
-| `bun run lint` | Revisa el código con ESLint. |
-| `bun run format` | Da formato al proyecto con Prettier. |
+| Comando              | Descripción                                    |
+| -------------------- | ---------------------------------------------- |
+| `bun run dev`        | Inicia el servidor de desarrollo.              |
+| `bun run build`      | Genera la compilación de producción.           |
+| `bun run preview`    | Sirve localmente la compilación de producción. |
+| `bun run test`       | Ejecuta todas las pruebas una vez.             |
+| `bun run test:watch` | Ejecuta las pruebas en modo observación.       |
+| `bun run lint`       | Revisa el código con ESLint.                   |
+| `bun run format`     | Da formato al proyecto con Prettier.           |
 
 Antes de enviar cambios:
 
