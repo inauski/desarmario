@@ -57,7 +57,7 @@ export function StepItemCreator({ stepId }: { stepId: number }) {
         <DialogContent className="max-h-[90dvh] w-[calc(100%-2rem)] overflow-y-auto rounded-3xl p-5">
           <DialogHeader className="text-left">
             <DialogTitle className="flex items-center gap-2 pr-8 text-xl">Nueva {kind === "bag" ? "bolsa" : "pieza"} <Code>{code}</Code></DialogTitle>
-            <DialogDescription>Se añadirá a este paso sin salir del desmontaje.</DialogDescription>
+            <DialogDescription>Se añadirá a este paso sin salir de la pantalla.</DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <Field label="Foto" group><PhotoPicker value={photos} onChange={setPhotos} /></Field>

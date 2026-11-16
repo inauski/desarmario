@@ -12,10 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AjustesRouteImport } from './routes/ajustes'
 import { Route as AltaRouteImport } from './routes/alta'
+import { Route as DesmontajeRouteImport } from './routes/desmontaje'
+import { Route as MontajeRouteImport } from './routes/montaje'
 import { Route as ProyectoRouteImport } from './routes/proyecto'
 import { Route as BolsasIdRouteImport } from './routes/bolsas.$id'
 import { Route as CajasIndexRouteImport } from './routes/cajas.index'
 import { Route as CajasIdRouteImport } from './routes/cajas.$id'
+import { Route as PasosIndexRouteImport } from './routes/pasos.index'
+import { Route as PasosIdRouteImport } from './routes/pasos.$id'
 import { Route as PiezasIndexRouteImport } from './routes/piezas.index'
 import { Route as PiezasIdRouteImport } from './routes/piezas.$id'
 import { Route as UnionesIdRouteImport } from './routes/uniones.$id'
@@ -33,6 +37,16 @@ const AjustesRoute = AjustesRouteImport.update({
 const AltaRoute = AltaRouteImport.update({
   id: '/alta',
   path: '/alta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DesmontajeRoute = DesmontajeRouteImport.update({
+  id: '/desmontaje',
+  path: '/desmontaje',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MontajeRoute = MontajeRouteImport.update({
+  id: '/montaje',
+  path: '/montaje',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProyectoRoute = ProyectoRouteImport.update({
@@ -55,6 +69,16 @@ const CajasIdRoute = CajasIdRouteImport.update({
   path: '/cajas/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PasosIndexRoute = PasosIndexRouteImport.update({
+  id: '/pasos/',
+  path: '/pasos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PasosIdRoute = PasosIdRouteImport.update({
+  id: '/pasos/$id',
+  path: '/pasos/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PiezasIndexRoute = PiezasIndexRouteImport.update({
   id: '/piezas/',
   path: '/piezas/',
@@ -75,24 +99,32 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ajustes': typeof AjustesRoute
   '/alta': typeof AltaRoute
+  '/desmontaje': typeof DesmontajeRoute
+  '/montaje': typeof MontajeRoute
   '/proyecto': typeof ProyectoRoute
   '/bolsas/$id': typeof BolsasIdRoute
   '/cajas/$id': typeof CajasIdRoute
+  '/pasos/$id': typeof PasosIdRoute
   '/piezas/$id': typeof PiezasIdRoute
   '/uniones/$id': typeof UnionesIdRoute
   '/cajas/': typeof CajasIndexRoute
+  '/pasos/': typeof PasosIndexRoute
   '/piezas/': typeof PiezasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ajustes': typeof AjustesRoute
   '/alta': typeof AltaRoute
+  '/desmontaje': typeof DesmontajeRoute
+  '/montaje': typeof MontajeRoute
   '/proyecto': typeof ProyectoRoute
   '/bolsas/$id': typeof BolsasIdRoute
   '/cajas/$id': typeof CajasIdRoute
+  '/pasos/$id': typeof PasosIdRoute
   '/piezas/$id': typeof PiezasIdRoute
   '/uniones/$id': typeof UnionesIdRoute
   '/cajas': typeof CajasIndexRoute
+  '/pasos': typeof PasosIndexRoute
   '/piezas': typeof PiezasIndexRoute
 }
 export interface FileRoutesById {
@@ -100,12 +132,16 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/ajustes': typeof AjustesRoute
   '/alta': typeof AltaRoute
+  '/desmontaje': typeof DesmontajeRoute
+  '/montaje': typeof MontajeRoute
   '/proyecto': typeof ProyectoRoute
   '/bolsas/$id': typeof BolsasIdRoute
   '/cajas/$id': typeof CajasIdRoute
+  '/pasos/$id': typeof PasosIdRoute
   '/piezas/$id': typeof PiezasIdRoute
   '/uniones/$id': typeof UnionesIdRoute
   '/cajas/': typeof CajasIndexRoute
+  '/pasos/': typeof PasosIndexRoute
   '/piezas/': typeof PiezasIndexRoute
 }
 export interface FileRouteTypes {
@@ -114,36 +150,48 @@ export interface FileRouteTypes {
     | '/'
     | '/ajustes'
     | '/alta'
+    | '/desmontaje'
+    | '/montaje'
     | '/proyecto'
     | '/bolsas/$id'
     | '/cajas/$id'
+    | '/pasos/$id'
     | '/piezas/$id'
     | '/uniones/$id'
     | '/cajas/'
+    | '/pasos/'
     | '/piezas/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/ajustes'
     | '/alta'
+    | '/desmontaje'
+    | '/montaje'
     | '/proyecto'
     | '/bolsas/$id'
     | '/cajas/$id'
+    | '/pasos/$id'
     | '/piezas/$id'
     | '/uniones/$id'
     | '/cajas'
+    | '/pasos'
     | '/piezas'
   id:
     | '__root__'
     | '/'
     | '/ajustes'
     | '/alta'
+    | '/desmontaje'
+    | '/montaje'
     | '/proyecto'
     | '/bolsas/$id'
     | '/cajas/$id'
+    | '/pasos/$id'
     | '/piezas/$id'
     | '/uniones/$id'
     | '/cajas/'
+    | '/pasos/'
     | '/piezas/'
   fileRoutesById: FileRoutesById
 }
@@ -151,12 +199,16 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AjustesRoute: typeof AjustesRoute
   AltaRoute: typeof AltaRoute
+  DesmontajeRoute: typeof DesmontajeRoute
+  MontajeRoute: typeof MontajeRoute
   ProyectoRoute: typeof ProyectoRoute
   BolsasIdRoute: typeof BolsasIdRoute
   CajasIdRoute: typeof CajasIdRoute
+  PasosIdRoute: typeof PasosIdRoute
   PiezasIdRoute: typeof PiezasIdRoute
   UnionesIdRoute: typeof UnionesIdRoute
   CajasIndexRoute: typeof CajasIndexRoute
+  PasosIndexRoute: typeof PasosIndexRoute
   PiezasIndexRoute: typeof PiezasIndexRoute
 }
 
@@ -181,6 +233,20 @@ declare module '@tanstack/react-router' {
       path: '/alta'
       fullPath: '/alta'
       preLoaderRoute: typeof AltaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/desmontaje': {
+      id: '/desmontaje'
+      path: '/desmontaje'
+      fullPath: '/desmontaje'
+      preLoaderRoute: typeof DesmontajeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/montaje': {
+      id: '/montaje'
+      path: '/montaje'
+      fullPath: '/montaje'
+      preLoaderRoute: typeof MontajeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/proyecto': {
@@ -211,6 +277,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CajasIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pasos/': {
+      id: '/pasos/'
+      path: '/pasos'
+      fullPath: '/pasos/'
+      preLoaderRoute: typeof PasosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pasos/$id': {
+      id: '/pasos/$id'
+      path: '/pasos/$id'
+      fullPath: '/pasos/$id'
+      preLoaderRoute: typeof PasosIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/piezas/': {
       id: '/piezas/'
       path: '/piezas'
@@ -239,12 +319,16 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AjustesRoute: AjustesRoute,
   AltaRoute: AltaRoute,
+  DesmontajeRoute: DesmontajeRoute,
+  MontajeRoute: MontajeRoute,
   ProyectoRoute: ProyectoRoute,
   BolsasIdRoute: BolsasIdRoute,
   CajasIdRoute: CajasIdRoute,
+  PasosIdRoute: PasosIdRoute,
   PiezasIdRoute: PiezasIdRoute,
   UnionesIdRoute: UnionesIdRoute,
   CajasIndexRoute: CajasIndexRoute,
+  PasosIndexRoute: PasosIndexRoute,
   PiezasIndexRoute: PiezasIndexRoute,
 }
 export const routeTree = rootRouteImport
