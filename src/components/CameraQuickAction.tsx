@@ -26,7 +26,7 @@ export function CameraQuickAction() {
         type="file"
         accept="image/*"
         capture="environment"
-        className="hidden"
+        hidden
         aria-label="Cámara para alta rápida"
         onChange={async (event) => {
           const file = event.target.files?.[0];
