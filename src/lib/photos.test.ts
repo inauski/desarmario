@@ -33,6 +33,9 @@ describe("compresión de fotos al guardar", () => {
     expect(canvas.height).toBe(800);
     expect(drawImage).toHaveBeenCalledWith(bitmap, 0, 0, PHOTO_MAX_EDGE, 800);
     expect(bitmap.close).toHaveBeenCalledOnce();
-    expect(add).toHaveBeenCalledWith({ blob: compressed, createdAt: expect.any(Number) });
+    expect(add).toHaveBeenCalledOnce();
+    const saved = add.mock.calls[0]![0];
+    expect(saved.blob).toBe(compressed);
+    expect(saved.createdAt).toEqual(expect.any(Number));
   });
 });
