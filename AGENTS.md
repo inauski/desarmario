@@ -30,3 +30,4 @@ use the editor.
 <!-- LOVABLE:END -->
 
 - All app data lives on-device in Dexie (src/lib/db.ts), photos as compressed Blobs; no backend, so access only from effects/live queries in the browser.
+- Any Field whose children are interactive controls (selects, buttons, state pickers) must pass `group`, so the wrapping <label> neither forwards taps to the first control nor becomes the control's accessible name.
