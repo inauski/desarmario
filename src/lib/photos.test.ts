@@ -24,17 +24,15 @@ describe("compresión de fotos al guardar", () => {
       }),
     } as unknown as HTMLCanvasElement;
     vi.spyOn(document, "createElement").mockReturnValue(canvas);
+    const add = vi.spyOn(db.photos, "add");
     await db.photos.clear();
 
-    const id = await savePhoto(new Blob(["foto-original-mucho-mas-grande"], { type: "image/png" }));
+    await savePhoto(new Blob(["foto-original-mucho-mas-grande"], { type: "image/png" }));
 
     expect(canvas.width).toBe(PHOTO_MAX_EDGE);
     expect(canvas.height).toBe(800);
     expect(drawImage).toHaveBeenCalledWith(bitmap, 0, 0, PHOTO_MAX_EDGE, 800);
     expect(bitmap.close).toHaveBeenCalledOnce();
-    const stored = await db.photos.get(id);
-    expect(stored?.blob.type).toBe("image/jpeg");
-    expect(stored?.blob.size).toBe(compressed.size);
-    expect(await stored?.blob.text()).toBe("jpeg-comprimido");
+    expect(add).toHaveBeenCalledWith({ blob: compressed, createdAt: expect.any(Number) });
   });
 });
