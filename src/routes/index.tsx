@@ -6,6 +6,7 @@ import { needsBackup } from "@/lib/backup";
 import { PhotoView } from "@/components/Photo";
 import { InstallAppCard } from "@/components/InstallAppCard";
 import { HelpButton } from "@/components/HelpDialog";
+import { ProjectSwitcher } from "@/components/ProjectSwitcher";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -48,6 +49,8 @@ function Home() {
         </Link>
         <HelpButton />
       </div>
+
+      <ProjectSwitcher currentName={project?.name} />
 
       {backupWarning && (
         <Link to="/ajustes" className="mb-5 flex items-center gap-3 rounded-2xl bg-warning p-4 text-warning-foreground">
