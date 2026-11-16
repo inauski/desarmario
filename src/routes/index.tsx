@@ -1,23 +1,70 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useLiveQuery } from "dexie-react-hooks";
+import { Boxes, Camera, Hammer, ListOrdered, Package, QrCode, Settings, Wrench } from "lucide-react";
+import { db, getProject } from "@/lib/db";
+import { PhotoView } from "@/components/Photo";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Armario — desmonta y vuelve a montar sin perder nada" },
+      { name: "description", content: "Registra piezas, bolsas y cajas con fotos y códigos para volver a montar tu armario." },
+      { property: "og:title", content: "Armario — desmonta y monta sin perder nada" },
+      { property: "og:description", content: "Piezas, bolsas y cajas con fotos y códigos, en tu móvil y sin conexión." },
+    ],
+  }),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Home() {
+  const project = useLiveQuery(getProject);
+  const pieces = useLiveQuery(() => db.pieces.toArray()) ?? [];
+  const bags = useLiveQuery(() => db.bags.count()) ?? 0;
+  const boxes = useLiveQuery(() => db.boxes.count()) ?? 0;
+  const done = pieces.filter((p) => p.state !== "montada").length;
+  const pct = pieces.length ? Math.round((done / pieces.length) * 100) : 0;
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="mx-auto max-w-xl px-4 pb-32 pt-6">
+      <Link to="/proyecto" className="mb-5 flex items-center gap-3">
+        <PhotoView id={project?.photoIds[0]} className="size-14 rounded-xl" />
+        <div className="flex-1">
+          <p className="text-xs font-bold uppercase tracking-widest text-primary">Proyecto</p>
+          <h1 className="font-display text-2xl font-extrabold leading-tight">{project?.name ?? "Mi armario"}</h1>
+        </div>
+        <Settings className="size-5 text-muted-foreground" />
+      </Link>
+
+      <section className="mb-6 rounded-3xl bg-foreground p-5 text-background">
+        <p className="text-sm opacity-70">Desmontaje</p>
+        <p className="font-display text-4xl font-extrabold">{done}<span className="text-xl opacity-60"> / {pieces.length} piezas</span></p>
+        <div className="mt-3 h-3 overflow-hidden rounded-full bg-background/20">
+          <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${pct}%` }} />
+        </div>
+        <p className="mt-3 text-sm opacity-70">{bags} bolsas · {boxes} cajas</p>
+      </section>
+
+      <Link to="/alta" className="mb-4 flex h-20 items-center justify-center gap-3 rounded-3xl bg-primary text-xl font-extrabold text-primary-foreground shadow-tool">
+        <Camera className="size-7" /> Alta rápida
+      </Link>
+
+      <div className="grid grid-cols-2 gap-3">
+        <Tile to="/piezas" icon={<Package />} label="Piezas" />
+        <Tile to="/cajas" icon={<Boxes />} label="Cajas y bolsas" />
+        <Tile icon={<Hammer />} label="Desmontaje" soon />
+        <Tile icon={<ListOrdered />} label="Montaje" soon />
+        <Tile icon={<QrCode />} label="Etiquetas" soon />
+        <Tile icon={<Wrench />} label="Herramientas" soon />
+      </div>
+      <Link to="/ajustes" className="mt-6 block text-center text-sm font-semibold text-muted-foreground underline">Copia de seguridad</Link>
     </div>
   );
+}
+
+function Tile({ to, icon, label, soon }: { to?: "/piezas" | "/cajas"; icon: React.ReactNode; label: string; soon?: boolean }) {
+  const cls = "flex h-28 flex-col justify-between rounded-3xl border-2 border-border bg-card p-4 [&_svg]:size-7";
+  if (soon || !to) return (
+    <div className={cls + " opacity-45"}>{icon}<div><p className="font-bold">{label}</p><p className="text-xs">Próximamente</p></div></div>
+  );
+  return <Link to={to} className={cls + " active:bg-muted [&_svg]:text-primary"}>{icon}<p className="font-bold">{label}</p></Link>;
 }
