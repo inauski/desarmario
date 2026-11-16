@@ -1,6 +1,6 @@
 # Etiquetas QR
 
-- [ ] Crear la pantalla Etiquetas con QR y selección múltiple.
-- [ ] Generar pegatinas PDF en cuadrícula A4 con código grande.
-- [ ] Añadir escáner con cámara y apertura de la ficha.
-- [ ] Comprobar enlaces, PDF, selección y escáner.
+- [x] Crear la pantalla Etiquetas con QR y selección múltiple.
+- [x] Generar pegatinas PDF en cuadrícula A4 con código grande.
+- [x] Añadir escáner con cámara y apertura de la ficha.
+- [x] Comprobar enlaces, PDF, selección y escáner.
