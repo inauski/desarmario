@@ -6,4 +6,5 @@
 - [x] Añadir soporte PWA instalable y offline seguro fuera de la vista previa.
 - [x] Probar recorridos móviles, compresión, manifiesto y ausencia de errores; 25 pruebas pasan.
 - [x] Añadir un botón de instalación directa para Android dentro de «Instalar en pantalla de inicio»; 26 pruebas pasan.
+- [x] Aplicar el diseño aportado al favicon, Android, Android maskable y Apple.
 - [ ] Comprobar recarga sin conexión e instalación real en la versión publicada — bloqueado hasta publicar la app.
