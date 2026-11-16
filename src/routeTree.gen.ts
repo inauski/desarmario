@@ -18,6 +18,7 @@ import { Route as CajasIndexRouteImport } from './routes/cajas.index'
 import { Route as CajasIdRouteImport } from './routes/cajas.$id'
 import { Route as PiezasIndexRouteImport } from './routes/piezas.index'
 import { Route as PiezasIdRouteImport } from './routes/piezas.$id'
+import { Route as UnionesIdRouteImport } from './routes/uniones.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,6 +65,11 @@ const PiezasIdRoute = PiezasIdRouteImport.update({
   path: '/piezas/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UnionesIdRoute = UnionesIdRouteImport.update({
+  id: '/uniones/$id',
+  path: '/uniones/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/bolsas/$id': typeof BolsasIdRoute
   '/cajas/$id': typeof CajasIdRoute
   '/piezas/$id': typeof PiezasIdRoute
+  '/uniones/$id': typeof UnionesIdRoute
   '/cajas/': typeof CajasIndexRoute
   '/piezas/': typeof PiezasIndexRoute
 }
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/bolsas/$id': typeof BolsasIdRoute
   '/cajas/$id': typeof CajasIdRoute
   '/piezas/$id': typeof PiezasIdRoute
+  '/uniones/$id': typeof UnionesIdRoute
   '/cajas': typeof CajasIndexRoute
   '/piezas': typeof PiezasIndexRoute
 }
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/bolsas/$id': typeof BolsasIdRoute
   '/cajas/$id': typeof CajasIdRoute
   '/piezas/$id': typeof PiezasIdRoute
+  '/uniones/$id': typeof UnionesIdRoute
   '/cajas/': typeof CajasIndexRoute
   '/piezas/': typeof PiezasIndexRoute
 }
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/bolsas/$id'
     | '/cajas/$id'
     | '/piezas/$id'
+    | '/uniones/$id'
     | '/cajas/'
     | '/piezas/'
   fileRoutesByTo: FileRoutesByTo
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/bolsas/$id'
     | '/cajas/$id'
     | '/piezas/$id'
+    | '/uniones/$id'
     | '/cajas'
     | '/piezas'
   id:
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/bolsas/$id'
     | '/cajas/$id'
     | '/piezas/$id'
+    | '/uniones/$id'
     | '/cajas/'
     | '/piezas/'
   fileRoutesById: FileRoutesById
@@ -143,6 +155,7 @@ export interface RootRouteChildren {
   BolsasIdRoute: typeof BolsasIdRoute
   CajasIdRoute: typeof CajasIdRoute
   PiezasIdRoute: typeof PiezasIdRoute
+  UnionesIdRoute: typeof UnionesIdRoute
   CajasIndexRoute: typeof CajasIndexRoute
   PiezasIndexRoute: typeof PiezasIndexRoute
 }
@@ -212,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PiezasIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/uniones/$id': {
+      id: '/uniones/$id'
+      path: '/uniones/$id'
+      fullPath: '/uniones/$id'
+      preLoaderRoute: typeof UnionesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -223,6 +243,7 @@ const rootRouteChildren: RootRouteChildren = {
   BolsasIdRoute: BolsasIdRoute,
   CajasIdRoute: CajasIdRoute,
   PiezasIdRoute: PiezasIdRoute,
+  UnionesIdRoute: UnionesIdRoute,
   CajasIndexRoute: CajasIndexRoute,
   PiezasIndexRoute: PiezasIndexRoute,
 }
