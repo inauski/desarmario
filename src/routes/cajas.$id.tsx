@@ -6,7 +6,7 @@ import { PhotoPicker, PhotoView } from "@/components/Photo";
 import { Code, Field, inputCls, ListLink, Page, StateBadge } from "@/components/ui-bits";
 
 export const Route = createFileRoute("/cajas/$id")({
-  head: () => ({ meta: [{ title: "Caja — Armario" }, { name: "description", content: "Piezas y bolsas guardadas en esta caja." }, { property: "og:title", content: "Caja — Armario" }, { property: "og:description", content: "Piezas y bolsas guardadas en esta caja." }] }),
+  head: () => ({ meta: [{ title: "Caja — Desarmario" }, { name: "description", content: "Piezas y bolsas guardadas en esta caja." }, { property: "og:title", content: "Caja — Desarmario" }, { property: "og:description", content: "Piezas y bolsas guardadas en esta caja." }] }),
   component: BoxDetail,
 });
 

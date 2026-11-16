@@ -7,7 +7,7 @@ import { Code, inputCls, ListLink, Page, StateBadge } from "@/components/ui-bits
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/piezas/")({
-  head: () => ({ meta: [{ title: "Piezas — Armario" }, { name: "description", content: "Todas las piezas del armario con estado y caja." }, { property: "og:title", content: "Piezas — Armario" }, { property: "og:description", content: "Todas las piezas del armario con estado y caja." }] }),
+  head: () => ({ meta: [{ title: "Piezas — Desarmario" }, { name: "description", content: "Todas las piezas del armario con estado y caja." }, { property: "og:title", content: "Piezas — Desarmario" }, { property: "og:description", content: "Todas las piezas del armario con estado y caja." }] }),
   component: Pieces,
 });
 

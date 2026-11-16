@@ -38,7 +38,7 @@ export function InstallAppCard() {
         <Smartphone className="size-7 shrink-0 text-primary" />
         <div className="min-w-0">
           <h2 className="font-bold">Instalar en pantalla de inicio</h2>
-          <p className="mt-1 text-sm text-muted-foreground">Abre Armario desde su propio icono, como una app.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Abre Desarmario desde su propio icono, como una app.</p>
         </div>
       </div>
       {installed && (
@@ -46,7 +46,7 @@ export function InstallAppCard() {
       )}
       {showButton && (
         <button type="button" className={`${btnSecondary} mt-4 h-14 w-full`} onClick={install}>
-          <Download /> {isAndroid ? "Instalar en Android" : "Instalar Armario"}
+          <Download /> {isAndroid ? "Instalar en Android" : "Instalar Desarmario"}
         </button>
       )}
       {!installed && !prompt && (

@@ -7,7 +7,7 @@ import { btnPrimary, Code, Field, inputCls, Page } from "@/components/ui-bits";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/uniones/$id")({
-  head: () => ({ meta: [{ title: "Unión — Armario" }, { name: "description", content: "Piezas que une, fijación, cantidad y bolsa asociada." }, { property: "og:title", content: "Unión — Armario" }, { property: "og:description", content: "Piezas que une, fijación, cantidad y bolsa asociada." }] }),
+  head: () => ({ meta: [{ title: "Unión — Desarmario" }, { name: "description", content: "Piezas que une, fijación, cantidad y bolsa asociada." }, { property: "og:title", content: "Unión — Desarmario" }, { property: "og:description", content: "Piezas que une, fijación, cantidad y bolsa asociada." }] }),
   component: JointDetail,
 });
 

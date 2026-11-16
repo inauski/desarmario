@@ -6,6 +6,8 @@ describe("instalación en pantalla de inicio", () => {
   it("declara una app independiente con iconos de 192 y 512 píxeles", () => {
     const publicDir = path.resolve(process.cwd(), "public");
     const manifest = JSON.parse(readFileSync(path.join(publicDir, "manifest.webmanifest"), "utf8"));
+    expect(manifest.name).toBe("Desarmario — desmontaje y montaje");
+    expect(manifest.short_name).toBe("Desarmario");
     expect(manifest.display).toBe("standalone");
     expect(manifest.start_url).toBe("/");
     expect(manifest.scope).toBe("/");

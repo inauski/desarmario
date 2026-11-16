@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "Armario — desmontaje y montaje",
-  "short_name": "Armario",
+  "name": "Desarmario — desmontaje y montaje",
+  "short_name": "Desarmario",
   "description": "Piezas, bolsas, cajas y pasos para desmontar y volver a montar tu armario.",
   "lang": "es",
   "start_url": "/",
