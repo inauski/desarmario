@@ -65,7 +65,9 @@ function LabelsPage() {
     try {
       const { generateLabelsPdf } = await import("@/lib/labels-pdf");
       const bytes = await generateLabelsPdf(selectedItems, window.location.origin);
-      const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
+      const copy = new Uint8Array(bytes.byteLength);
+      copy.set(bytes);
+      const url = URL.createObjectURL(new Blob([copy.buffer], { type: "application/pdf" }));
       const anchor = document.createElement("a");
       anchor.href = url;
       anchor.download = "etiquetas-armario.pdf";
@@ -90,7 +92,7 @@ function LabelsPage() {
     <Page title="Etiquetas" back action={<button type="button" aria-label="Escanear QR" onClick={() => setScannerOpen(true)} className="grid size-11 place-items-center rounded-full bg-primary text-primary-foreground"><ScanLine /></button>}>
       <div className="mb-5 rounded-3xl bg-foreground p-4 text-background">
         <p className="text-sm opacity-70">A4 adhesivo · 3 columnas × 7 filas</p>
-        <p className="mt-1 font-display text-2xl font-extrabold">{selected.length} seleccionadas</p>
+        <p className="mt-1 font-display text-2xl font-extrabold">{selected.size} seleccionadas</p>
         <div className="mt-4 grid gap-2">
           <button type="button" className={btnPrimary} disabled={!selectedItems.length || busy} onClick={downloadPdf}><Download />{busy ? "Creando PDF…" : "Generar PDF para imprimir"}</button>
           <button type="button" className={cn(btnSecondary, "border-background/30 bg-background/10 text-background")} onClick={() => setScannerOpen(true)}><ScanLine /> Escanear QR</button>

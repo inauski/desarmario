@@ -29,7 +29,7 @@ export async function generateLabelsPdf(items: LabelItem[], origin: string) {
     const row = Math.floor(slot / columns);
     const x = marginX + column * (labelWidth + gapX);
     const y = pageHeight - marginY - (row + 1) * labelHeight;
-    const item = items[index];
+    const item = items[index]!;
 
     const qrValue = new URL(labelPath(item.kind, item.id), origin).href;
     const qrData = await QRCode.toDataURL(qrValue, { width: 400, margin: 0, errorCorrectionLevel: "M" });
