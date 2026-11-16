@@ -13,7 +13,7 @@ describe("instalación en pantalla de inicio", () => {
     expect(sizes).toContain("192x192");
     expect(sizes).toContain("512x512");
     for (const icon of manifest.icons) {
-      expect(existsSync(new URL(`../../public${icon.src}`, import.meta.url))).toBe(true);
+      expect(existsSync(path.join(publicDir, icon.src))).toBe(true);
     }
   });
 });
