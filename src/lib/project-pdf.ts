@@ -69,6 +69,7 @@ class Writer {
   }
 
   heading(value: string, size = 15) {
+    this.ensure(size + 35);
     this.space(8);
     this.paragraph(value, { size, bold: true, lineHeight: size + 5 });
     this.space(2);
