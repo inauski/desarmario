@@ -1,4 +1,5 @@
 import Dexie, { type Table } from "dexie";
+import { activeWorkspaceKey } from "./workspaces";
 
 export type PieceState = "montada" | "desmontada" | "guardada";
 export const PIECE_STATES: PieceState[] = ["montada", "desmontada", "guardada"];
@@ -37,8 +38,8 @@ class ArmarioDB extends Dexie {
   tools!: Table<Tool, number>;
   photos!: Table<Photo, number>;
   counters!: Table<Counter, string>;
-  constructor() {
-    super("armario");
+  constructor(name = "armario") {
+    super(name);
     this.version(1).stores({
       project: "id",
       pieces: "++id, code, state, boxId",
@@ -53,7 +54,7 @@ class ArmarioDB extends Dexie {
   }
 }
 
-export const db = new ArmarioDB();
+export const db = new ArmarioDB(activeWorkspaceKey());
 
 export function formatCode(kind: "P" | "B" | "C", n: number) {
   return kind === "C" ? `C-${n}` : `${kind}-${String(n).padStart(2, "0")}`;

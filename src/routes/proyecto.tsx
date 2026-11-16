@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db, getProject, type Project } from "@/lib/db";
+import { activeWorkspaceKey, renameWorkspace } from "@/lib/workspaces";
 import { PhotoPicker } from "@/components/Photo";
 import { Field, inputCls, Page } from "@/components/ui-bits";
 
@@ -16,7 +17,7 @@ function ProjectPage() {
   return (
     <Page title="Proyecto" back>
       <div className="space-y-5">
-        <Field label="Nombre"><input className={inputCls} defaultValue={p.name} onBlur={(e) => set({ name: e.target.value || "Mi armario" })} /></Field>
+        <Field label="Nombre"><input className={inputCls} defaultValue={p.name} onBlur={(e) => { const name = e.target.value || "Mi armario"; set({ name }); renameWorkspace(activeWorkspaceKey(), name); }} /></Field>
         <Field label="Descripción"><textarea className={inputCls} rows={3} defaultValue={p.description} onBlur={(e) => set({ description: e.target.value })} /></Field>
         <Field group label="Fotos del armario montado"><PhotoPicker value={p.photoIds} onChange={(photoIds) => set({ photoIds })} /></Field>
       </div>
