@@ -9,9 +9,9 @@ import { InstallAppCard } from "@/components/InstallAppCard";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Armario — desmonta y vuelve a montar sin perder nada" },
+      { title: "Desarmario — desmonta y vuelve a montar sin perder nada" },
       { name: "description", content: "Registra piezas, bolsas y cajas con fotos y códigos para volver a montar tu armario." },
-      { property: "og:title", content: "Armario — desmonta y monta sin perder nada" },
+      { property: "og:title", content: "Desarmario — desmonta y monta sin perder nada" },
       { property: "og:description", content: "Piezas, bolsas y cajas con fotos y códigos, en tu móvil y sin conexión." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -12,7 +12,7 @@ function fittedText(value: string, font: PDFFont, size: number, maxWidth: number
 
 export async function generateLabelsPdf(items: LabelItem[], origin: string) {
   const doc = await PDFDocument.create();
-  doc.setTitle("Etiquetas — Armario");
+  doc.setTitle("Etiquetas — Desarmario");
   doc.setSubject("Pegatinas QR para piezas, bolsas y cajas");
   const regular = await doc.embedFont(StandardFonts.Helvetica);
   const bold = await doc.embedFont(StandardFonts.HelveticaBold);

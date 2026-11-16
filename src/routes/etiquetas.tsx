@@ -13,9 +13,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/etiquetas")({
   head: () => ({
     meta: [
-      { title: "Etiquetas QR — Armario" },
+      { title: "Etiquetas QR — Desarmario" },
       { name: "description", content: "Selecciona piezas, bolsas y cajas para imprimir sus pegatinas QR en A4." },
-      { property: "og:title", content: "Etiquetas QR — Armario" },
+      { property: "og:title", content: "Etiquetas QR — Desarmario" },
       { property: "og:description", content: "Genera pegatinas con código y QR, y escanéalas para abrir cada ficha." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

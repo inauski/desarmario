@@ -5,7 +5,7 @@ import { PhotoPicker } from "@/components/Photo";
 import { Field, inputCls, Page } from "@/components/ui-bits";
 
 export const Route = createFileRoute("/proyecto")({
-  head: () => ({ meta: [{ title: "Proyecto — Armario" }, { name: "description", content: "Nombre, descripción y fotos del armario montado." }, { property: "og:title", content: "Proyecto — Armario" }, { property: "og:description", content: "Nombre, descripción y fotos del armario montado." }] }),
+  head: () => ({ meta: [{ title: "Proyecto — Desarmario" }, { name: "description", content: "Nombre, descripción y fotos del armario montado." }, { property: "og:title", content: "Proyecto — Desarmario" }, { property: "og:description", content: "Nombre, descripción y fotos del armario montado." }] }),
   component: ProjectPage,
 });
 

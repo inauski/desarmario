@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/herramientas")({
   head: () => ({
     meta: [
-      { title: "Herramientas — Armario" },
+      { title: "Herramientas — Desarmario" },
       { name: "description", content: "Checklist de herramientas y tamaños para preparar el desmontaje." },
-      { property: "og:title", content: "Herramientas — Armario" },
+      { property: "og:title", content: "Herramientas — Desarmario" },
       { property: "og:description", content: "Marca cada herramienta como preparada antes de empezar." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

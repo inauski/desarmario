@@ -42,7 +42,7 @@ function Scanner({ onFound }: { onFound: Props["onFound"] }) {
           if (!result || found) return;
           const parsed = parseLabelUrl(result.getText(), window.location.origin);
           if (!parsed) {
-            setStatus("Este QR no es una etiqueta válida de Armario. Sigue buscando…");
+            setStatus("Este QR no es una etiqueta válida de Desarmario. Sigue buscando…");
             return;
           }
           found = true;

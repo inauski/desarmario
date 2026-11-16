@@ -9,7 +9,7 @@ import { Code, Field, inputCls, Page } from "@/components/ui-bits";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/piezas/$id")({
-  head: () => ({ meta: [{ title: "Ficha de pieza — Armario" }, { name: "description", content: "Fotos, orientación, notas y ubicación de la pieza." }, { property: "og:title", content: "Ficha de pieza — Armario" }, { property: "og:description", content: "Fotos, orientación, notas y ubicación de la pieza." }] }),
+  head: () => ({ meta: [{ title: "Ficha de pieza — Desarmario" }, { name: "description", content: "Fotos, orientación, notas y ubicación de la pieza." }, { property: "og:title", content: "Ficha de pieza — Desarmario" }, { property: "og:description", content: "Fotos, orientación, notas y ubicación de la pieza." }] }),
   component: PieceDetail,
 });
 

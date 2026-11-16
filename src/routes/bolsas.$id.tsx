@@ -8,7 +8,7 @@ import { BoxSelect } from "@/components/BoxSelect";
 import { Code, Field, inputCls, Page } from "@/components/ui-bits";
 
 export const Route = createFileRoute("/bolsas/$id")({
-  head: () => ({ meta: [{ title: "Bolsa — Armario" }, { name: "description", content: "Contenido y caja de la bolsa de herrajes." }, { property: "og:title", content: "Bolsa — Armario" }, { property: "og:description", content: "Contenido y caja de la bolsa de herrajes." }] }),
+  head: () => ({ meta: [{ title: "Bolsa — Desarmario" }, { name: "description", content: "Contenido y caja de la bolsa de herrajes." }, { property: "og:title", content: "Bolsa — Desarmario" }, { property: "og:description", content: "Contenido y caja de la bolsa de herrajes." }] }),
   component: BagDetail,
 });
 

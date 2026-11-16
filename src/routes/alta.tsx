@@ -15,7 +15,7 @@ export const Route = createFileRoute("/alta")({
     const foto = search["foto"];
     return typeof foto === "number" && Number.isInteger(foto) && foto > 0 ? { foto } : {};
   },
-  head: () => ({ meta: [{ title: "Alta rápida — Armario" }, { name: "description", content: "Foto, código y guardar en segundos." }, { property: "og:title", content: "Alta rápida — Armario" }, { property: "og:description", content: "Foto, código y guardar en segundos." }] }),
+  head: () => ({ meta: [{ title: "Alta rápida — Desarmario" }, { name: "description", content: "Foto, código y guardar en segundos." }, { property: "og:title", content: "Alta rápida — Desarmario" }, { property: "og:description", content: "Foto, código y guardar en segundos." }] }),
   component: QuickAdd,
 });
 

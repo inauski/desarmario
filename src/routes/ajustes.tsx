@@ -11,9 +11,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/ajustes")({
   head: () => ({
     meta: [
-      { title: "Copia de seguridad y exportación — Armario" },
+      { title: "Copia de seguridad y exportación — Desarmario" },
       { name: "description", content: "Exporta e importa el proyecto completo en JSON o crea un PDF con piezas, uniones y pasos." },
-      { property: "og:title", content: "Copia de seguridad — Armario" },
+      { property: "og:title", content: "Copia de seguridad — Desarmario" },
       { property: "og:description", content: "Guarda todos tus datos y fotos, o exporta el proyecto en PDF." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -100,7 +100,7 @@ function Backup() {
             await importBackup(JSON.parse(await file.text()));
             toast.success("Copia importada con datos y fotos");
           } catch {
-            toast.error("No se pudo importar. Comprueba que sea una copia JSON de Armario.");
+            toast.error("No se pudo importar. Comprueba que sea una copia JSON de Desarmario.");
           }
         }} />
       </section>

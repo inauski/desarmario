@@ -92,7 +92,7 @@ class Writer {
 
 export async function generateProjectPdf(data: ProjectPdfData) {
   const doc = await PDFDocument.create();
-  doc.setTitle(`${data.project.name} — Proyecto Armario`);
+  doc.setTitle(`${data.project.name} — Proyecto Desarmario`);
   doc.setSubject("Piezas, uniones y pasos del proyecto");
   const regular = await doc.embedFont(StandardFonts.Helvetica);
   const bold = await doc.embedFont(StandardFonts.HelveticaBold);

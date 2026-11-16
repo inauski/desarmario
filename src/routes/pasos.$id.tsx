@@ -11,9 +11,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/pasos/$id")({
   head: () => ({
     meta: [
-      { title: "Editar paso — Armario" },
+      { title: "Editar paso — Desarmario" },
       { name: "description", content: "Foto, herramientas, piezas y bolsas de un paso del armario." },
-      { property: "og:title", content: "Editar paso — Armario" },
+      { property: "og:title", content: "Editar paso — Desarmario" },
       { property: "og:description", content: "Prepara lo que necesitas para desmontar y volver a montar." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
