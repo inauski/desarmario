@@ -13,6 +13,12 @@ export interface Bag {
   jointId: number | null; boxId: number | null; createdAt: number;
 }
 export interface Box { id?: number; code: string; location: string; photoIds: number[]; createdAt: number }
+export const JOINT_TYPES = ["tornillo", "excéntrica", "espiga", "cuña", "escuadra", "otro"] as const;
+export type JointType = (typeof JOINT_TYPES)[number];
+export interface Joint {
+  id?: number; pieceIds: number[]; type: JointType; quantity: number; photoIds: number[];
+  notes: string; bagId: number | null; createdAt: number;
+}
 export interface Photo { id?: number; blob: Blob; createdAt: number }
 export interface Counter { kind: "P" | "B" | "C"; value: number }
 
@@ -21,6 +27,7 @@ class ArmarioDB extends Dexie {
   pieces!: Table<Piece, number>;
   bags!: Table<Bag, number>;
   boxes!: Table<Box, number>;
+  joints!: Table<Joint, number>;
   photos!: Table<Photo, number>;
   counters!: Table<Counter, string>;
   constructor() {
@@ -33,6 +40,7 @@ class ArmarioDB extends Dexie {
       photos: "++id",
       counters: "kind",
     });
+    this.version(2).stores({ joints: "++id, *pieceIds, bagId" });
   }
 }
 
@@ -53,6 +61,40 @@ export async function nextCode(kind: "P" | "B" | "C") {
     const value = (c?.value ?? 0) + 1;
     await db.counters.put({ kind, value });
     return formatCode(kind, value);
+  });
+}
+
+export const jointLabel = (id?: number) => `U-${String(id ?? 0).padStart(2, "0")}`;
+
+/** Links a bag to a joint (or unlinks with null), keeping both sides in sync. */
+export async function linkBag(jointId: number, bagId: number | null) {
+  await db.transaction("rw", db.joints, db.bags, async () => {
+    const j = await db.joints.get(jointId);
+    if (j?.bagId && j.bagId !== bagId) await db.bags.update(j.bagId, { jointId: null });
+    if (bagId) {
+      const b = await db.bags.get(bagId);
+      if (b?.jointId && b.jointId !== jointId) await db.joints.update(b.jointId, { bagId: null });
+      await db.bags.update(bagId, { jointId });
+    }
+    await db.joints.update(jointId, { bagId });
+  });
+}
+
+export async function createBagForJoint(jointId: number) {
+  const code = await nextCode("B");
+  const j = await db.joints.get(jointId);
+  const pieceIds = j?.pieceIds ?? [];
+  const pieces = (await db.pieces.bulkGet(pieceIds)).filter(Boolean);
+  const content = j ? `${j.quantity} × ${j.type}${pieces.length ? ` (${pieces.map((p) => p!.code).join(" + ")})` : ""}` : "";
+  const bagId = await db.bags.add({ code, content, quantity: j?.quantity ?? 1, photoIds: [], jointId: null, boxId: null, createdAt: Date.now() });
+  await linkBag(jointId, bagId);
+  return bagId;
+}
+
+export async function deleteJoint(jointId: number) {
+  await db.transaction("rw", db.joints, db.bags, async () => {
+    await db.bags.where("jointId").equals(jointId).modify({ jointId: null });
+    await db.joints.delete(jointId);
   });
 }
 
@@ -82,6 +124,7 @@ function blobToDataUrl(b: Blob): Promise<string> {
 export async function exportBackup() {
   const photos = await db.photos.toArray();
   return {
+    joints: await db.joints.toArray(),
     app: "armario", version: 1, exportedAt: new Date().toISOString(),
     project: await db.project.toArray(), pieces: await db.pieces.toArray(), bags: await db.bags.toArray(),
     boxes: await db.boxes.toArray(), counters: await db.counters.toArray(),
@@ -92,7 +135,9 @@ export async function exportBackup() {
 export async function importBackup(data: any) {
   if (data?.app !== "armario") throw new Error("Archivo no válido");
   const photos = await Promise.all((data.photos ?? []).map(async (p: any) => ({ id: p.id, createdAt: p.createdAt, blob: await (await fetch(p.data)).blob() })));
-  await db.transaction("rw", [db.project, db.pieces, db.bags, db.boxes, db.photos, db.counters], async () => {
+  await db.transaction("rw", [db.project, db.joints, db.pieces, db.bags, db.boxes, db.photos, db.counters], async () => {
+    await db.joints.clear();
+    await db.joints.bulkAdd(data.joints ?? []);
     await Promise.all([db.project.clear(), db.pieces.clear(), db.bags.clear(), db.boxes.clear(), db.photos.clear(), db.counters.clear()]);
     await db.project.bulkAdd(data.project ?? []);
     await db.pieces.bulkAdd(data.pieces ?? []);
