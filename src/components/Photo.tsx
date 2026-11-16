@@ -4,7 +4,7 @@ import { Camera, X } from "lucide-react";
 import { db, savePhoto } from "@/lib/db";
 import { cn } from "@/lib/utils";
 
-export function PhotoView({ id, className }: { id?: number; className?: string }) {
+export function PhotoView({ id, className }: { id?: number | undefined; className?: string }) {
   const photo = useLiveQuery(() => (id ? db.photos.get(id) : undefined), [id]);
   const [url, setUrl] = useState<string>();
   useEffect(() => {
