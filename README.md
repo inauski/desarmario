@@ -121,7 +121,7 @@ La terminal mostrará la dirección local para abrir la aplicación.
 Antes de enviar cambios:
 
 ```bash
-bun test
+bun run test
 bun run lint
 bun run build
 ```
