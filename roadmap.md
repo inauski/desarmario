@@ -1,6 +1,7 @@
-# Etiquetas QR
+# Herramientas y copias del proyecto
 
-- [x] Crear la pantalla Etiquetas con QR y selección múltiple.
-- [x] Generar pegatinas PDF en cuadrícula A4 con código grande.
-- [x] Añadir escáner con cámara y apertura de la ficha.
-- [x] Comprobar enlaces, PDF, selección y escáner.
+- [x] Añadir checklist de herramientas con nombre, tamaño y preparada.
+- [x] Incluir todos los datos y fotos al exportar e importar JSON.
+- [x] Exportar un PDF con piezas, uniones y pasos.
+- [x] Avisar en inicio si la copia tiene más de 3 días o no existe.
+- [x] Verificar checklist, restauración, PDF y aviso.

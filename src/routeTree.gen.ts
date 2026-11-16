@@ -14,6 +14,7 @@ import { Route as AjustesRouteImport } from './routes/ajustes'
 import { Route as AltaRouteImport } from './routes/alta'
 import { Route as DesmontajeRouteImport } from './routes/desmontaje'
 import { Route as EtiquetasRouteImport } from './routes/etiquetas'
+import { Route as HerramientasRouteImport } from './routes/herramientas'
 import { Route as MontajeRouteImport } from './routes/montaje'
 import { Route as ProyectoRouteImport } from './routes/proyecto'
 import { Route as BolsasIdRouteImport } from './routes/bolsas.$id'
@@ -48,6 +49,11 @@ const DesmontajeRoute = DesmontajeRouteImport.update({
 const EtiquetasRoute = EtiquetasRouteImport.update({
   id: '/etiquetas',
   path: '/etiquetas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HerramientasRoute = HerramientasRouteImport.update({
+  id: '/herramientas',
+  path: '/herramientas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MontajeRoute = MontajeRouteImport.update({
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/alta': typeof AltaRoute
   '/desmontaje': typeof DesmontajeRoute
   '/etiquetas': typeof EtiquetasRoute
+  '/herramientas': typeof HerramientasRoute
   '/montaje': typeof MontajeRoute
   '/proyecto': typeof ProyectoRoute
   '/bolsas/$id': typeof BolsasIdRoute
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/alta': typeof AltaRoute
   '/desmontaje': typeof DesmontajeRoute
   '/etiquetas': typeof EtiquetasRoute
+  '/herramientas': typeof HerramientasRoute
   '/montaje': typeof MontajeRoute
   '/proyecto': typeof ProyectoRoute
   '/bolsas/$id': typeof BolsasIdRoute
@@ -142,6 +150,7 @@ export interface FileRoutesById {
   '/alta': typeof AltaRoute
   '/desmontaje': typeof DesmontajeRoute
   '/etiquetas': typeof EtiquetasRoute
+  '/herramientas': typeof HerramientasRoute
   '/montaje': typeof MontajeRoute
   '/proyecto': typeof ProyectoRoute
   '/bolsas/$id': typeof BolsasIdRoute
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/alta'
     | '/desmontaje'
     | '/etiquetas'
+    | '/herramientas'
     | '/montaje'
     | '/proyecto'
     | '/bolsas/$id'
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
     | '/alta'
     | '/desmontaje'
     | '/etiquetas'
+    | '/herramientas'
     | '/montaje'
     | '/proyecto'
     | '/bolsas/$id'
@@ -195,6 +206,7 @@ export interface FileRouteTypes {
     | '/alta'
     | '/desmontaje'
     | '/etiquetas'
+    | '/herramientas'
     | '/montaje'
     | '/proyecto'
     | '/bolsas/$id'
@@ -213,6 +225,7 @@ export interface RootRouteChildren {
   AltaRoute: typeof AltaRoute
   DesmontajeRoute: typeof DesmontajeRoute
   EtiquetasRoute: typeof EtiquetasRoute
+  HerramientasRoute: typeof HerramientasRoute
   MontajeRoute: typeof MontajeRoute
   ProyectoRoute: typeof ProyectoRoute
   BolsasIdRoute: typeof BolsasIdRoute
@@ -260,6 +273,13 @@ declare module '@tanstack/react-router' {
       path: '/etiquetas'
       fullPath: '/etiquetas'
       preLoaderRoute: typeof EtiquetasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/herramientas': {
+      id: '/herramientas'
+      path: '/herramientas'
+      fullPath: '/herramientas'
+      preLoaderRoute: typeof HerramientasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/montaje': {
@@ -341,6 +361,7 @@ const rootRouteChildren: RootRouteChildren = {
   AltaRoute: AltaRoute,
   DesmontajeRoute: DesmontajeRoute,
   EtiquetasRoute: EtiquetasRoute,
+  HerramientasRoute: HerramientasRoute,
   MontajeRoute: MontajeRoute,
   ProyectoRoute: ProyectoRoute,
   BolsasIdRoute: BolsasIdRoute,

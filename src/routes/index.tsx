@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useLiveQuery } from "dexie-react-hooks";
-import { Boxes, Camera, Hammer, ListOrdered, Package, PackageOpen, QrCode, Settings, Wrench } from "lucide-react";
+import { AlertTriangle, Boxes, Camera, Hammer, ListOrdered, Package, PackageOpen, QrCode, Settings, Wrench } from "lucide-react";
 import { db, getProject } from "@/lib/db";
+import { needsBackup } from "@/lib/backup";
 import { PhotoView } from "@/components/Photo";
 
 export const Route = createFileRoute("/")({
@@ -24,11 +25,13 @@ function Home() {
   const steps = useLiveQuery(() => db.steps.toArray()) ?? [];
   const bags = useLiveQuery(() => db.bags.count()) ?? 0;
   const boxes = useLiveQuery(() => db.boxes.count()) ?? 0;
+  const tools = useLiveQuery(() => db.tools.count()) ?? 0;
   const done = pieces.filter((p) => p.state !== "montada").length;
   const stepsDone = steps.filter((step) => step.done).length;
   const stepsAssembled = steps.filter((step) => step.assembled).length;
   const pct = steps.length ? Math.round((stepsDone / steps.length) * 100) : 0;
   const assemblyPct = steps.length ? Math.round((stepsAssembled / steps.length) * 100) : 0;
+  const backupWarning = !!project && needsBackup(project.lastBackupAt, Date.now(), pieces.length + bags + boxes + steps.length + tools > 0);
 
   return (
     <div className="mx-auto max-w-xl px-4 pb-32 pt-6">
@@ -40,6 +43,13 @@ function Home() {
         </div>
         <Settings className="size-5 text-muted-foreground" />
       </Link>
+
+      {backupWarning && (
+        <Link to="/ajustes" className="mb-5 flex items-center gap-3 rounded-2xl bg-warning p-4 text-warning-foreground">
+          <AlertTriangle className="size-7 shrink-0" />
+          <div className="flex-1"><p className="font-bold">{project.lastBackupAt ? "Tu copia tiene más de 3 días" : "No tienes copia de seguridad"}</p><p className="text-sm">Toca aquí para guardar tus datos y fotos.</p></div>
+        </Link>
+      )}
 
       <section className="mb-6 rounded-3xl bg-foreground p-5 text-background">
         <p className="text-sm opacity-70">Desmontaje</p>
@@ -67,14 +77,14 @@ function Home() {
         <Tile to="/desmontaje" icon={<Hammer />} label="Desmontaje" />
         <Tile to="/montaje" icon={<PackageOpen />} label="Montaje" />
         <Tile to="/etiquetas" icon={<QrCode />} label="Etiquetas" />
-        <Tile icon={<Wrench />} label="Herramientas" soon />
+        <Tile to="/herramientas" icon={<Wrench />} label="Herramientas" />
       </div>
       <Link to="/ajustes" className="mt-6 block text-center text-sm font-semibold text-muted-foreground underline">Copia de seguridad</Link>
     </div>
   );
 }
 
-function Tile({ to, icon, label, soon }: { to?: "/piezas" | "/cajas" | "/pasos" | "/desmontaje" | "/montaje" | "/etiquetas"; icon: React.ReactNode; label: string; soon?: boolean }) {
+function Tile({ to, icon, label, soon }: { to?: "/piezas" | "/cajas" | "/pasos" | "/desmontaje" | "/montaje" | "/etiquetas" | "/herramientas"; icon: React.ReactNode; label: string; soon?: boolean }) {
   const cls = "flex h-28 flex-col justify-between rounded-3xl border-2 border-border bg-card p-4 [&_svg]:size-7";
   if (soon || !to) return (
     <div className={cls + " opacity-45"}>{icon}<div><p className="font-bold">{label}</p><p className="text-xs">Próximamente</p></div></div>

@@ -3,7 +3,7 @@ import Dexie, { type Table } from "dexie";
 export type PieceState = "montada" | "desmontada" | "guardada";
 export const PIECE_STATES: PieceState[] = ["montada", "desmontada", "guardada"];
 
-export interface Project { id: number; name: string; description: string; photoIds: number[] }
+export interface Project { id: number; name: string; description: string; photoIds: number[]; lastBackupAt?: number }
 export interface Piece {
   id?: number; code: string; name: string; photoIds: number[]; measures: string;
   orientation: string; notes: string; state: PieceState; boxId: number | null; createdAt: number;
@@ -23,6 +23,7 @@ export interface Step {
   id?: number; order: number; title: string; description: string; photoIds: number[];
   tools: string[]; pieceIds: number[]; bagIds: number[]; done: boolean; assembled: boolean; createdAt: number;
 }
+export interface Tool { id?: number; name: string; size: string; prepared: boolean; createdAt: number }
 export interface Photo { id?: number; blob: Blob; createdAt: number }
 export interface Counter { kind: "P" | "B" | "C"; value: number }
 
@@ -33,6 +34,7 @@ class ArmarioDB extends Dexie {
   boxes!: Table<Box, number>;
   joints!: Table<Joint, number>;
   steps!: Table<Step, number>;
+  tools!: Table<Tool, number>;
   photos!: Table<Photo, number>;
   counters!: Table<Counter, string>;
   constructor() {
@@ -47,6 +49,7 @@ class ArmarioDB extends Dexie {
     });
     this.version(2).stores({ joints: "++id, *pieceIds, bagId" });
     this.version(3).stores({ steps: "++id, order, done, assembled, *pieceIds, *bagIds" });
+    this.version(4).stores({ tools: "++id, name, prepared" });
   }
 }
 
@@ -135,12 +138,15 @@ function blobToDataUrl(b: Blob): Promise<string> {
 }
 
 export async function exportBackup() {
+  const exportedAt = new Date();
+  const project = { ...(await getProject()), lastBackupAt: exportedAt.getTime() };
   const photos = await db.photos.toArray();
   return {
     joints: await db.joints.toArray(),
     steps: await db.steps.toArray(),
-    app: "armario", version: 1, exportedAt: new Date().toISOString(),
-    project: await db.project.toArray(), pieces: await db.pieces.toArray(), bags: await db.bags.toArray(),
+    tools: await db.tools.toArray(),
+    app: "armario", version: 2, exportedAt: exportedAt.toISOString(),
+    project: [project], pieces: await db.pieces.toArray(), bags: await db.bags.toArray(),
     boxes: await db.boxes.toArray(), counters: await db.counters.toArray(),
     photos: await Promise.all(photos.map(async (p) => ({ id: p.id, createdAt: p.createdAt, data: await blobToDataUrl(p.blob) }))),
   };
@@ -149,13 +155,15 @@ export async function exportBackup() {
 export async function importBackup(data: any) {
   if (data?.app !== "armario") throw new Error("Archivo no válido");
   const photos = await Promise.all((data.photos ?? []).map(async (p: any) => ({ id: p.id, createdAt: p.createdAt, blob: await (await fetch(p.data)).blob() })));
-  await db.transaction("rw", [db.project, db.joints, db.steps, db.pieces, db.bags, db.boxes, db.photos, db.counters], async () => {
+  await db.transaction("rw", [db.project, db.joints, db.steps, db.tools, db.pieces, db.bags, db.boxes, db.photos, db.counters], async () => {
     await db.joints.clear();
     await db.joints.bulkAdd(data.joints ?? []);
     await db.steps.clear();
     await db.steps.bulkAdd((data.steps ?? []).map((step: any) => ({ ...step, assembled: step.assembled ?? false })));
+    await db.tools.clear();
+    await db.tools.bulkAdd(data.tools ?? []);
     await Promise.all([db.project.clear(), db.pieces.clear(), db.bags.clear(), db.boxes.clear(), db.photos.clear(), db.counters.clear()]);
-    await db.project.bulkAdd(data.project ?? []);
+    await db.project.bulkAdd((data.project ?? []).map((project: Project) => ({ ...project, lastBackupAt: Date.now() })));
     await db.pieces.bulkAdd(data.pieces ?? []);
     await db.bags.bulkAdd(data.bags ?? []);
     await db.boxes.bulkAdd(data.boxes ?? []);
