@@ -102,7 +102,7 @@ export async function generateProjectPdf(data: ProjectPdfData) {
   writer.heading(data.project.name || "Mi armario", 24);
   if (data.project.description) writer.paragraph(data.project.description, { size: 11, color: rgb(0.3, 0.3, 0.3) });
   writer.paragraph(`Exportado el ${new Intl.DateTimeFormat("es-ES", { dateStyle: "long" }).format(new Date())}`, { size: 9, color: rgb(0.4, 0.4, 0.4) });
-  writer.paragraph(`${data.pieces.length} piezas · ${data.joints.length} uniones · ${data.steps.length} pasos`, { bold: true, size: 11 });
+  writer.paragraph(`${data.pieces.length} ${data.pieces.length === 1 ? "pieza" : "piezas"} · ${data.joints.length} ${data.joints.length === 1 ? "unión" : "uniones"} · ${data.steps.length} ${data.steps.length === 1 ? "paso" : "pasos"}`, { bold: true, size: 11 });
   writer.rule();
 
   writer.heading("Piezas", 19);

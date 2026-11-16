@@ -25,12 +25,13 @@ function Home() {
   const steps = useLiveQuery(() => db.steps.toArray()) ?? [];
   const bags = useLiveQuery(() => db.bags.count()) ?? 0;
   const boxes = useLiveQuery(() => db.boxes.count()) ?? 0;
+  const tools = useLiveQuery(() => db.tools.count()) ?? 0;
   const done = pieces.filter((p) => p.state !== "montada").length;
   const stepsDone = steps.filter((step) => step.done).length;
   const stepsAssembled = steps.filter((step) => step.assembled).length;
   const pct = steps.length ? Math.round((stepsDone / steps.length) * 100) : 0;
   const assemblyPct = steps.length ? Math.round((stepsAssembled / steps.length) * 100) : 0;
-  const backupWarning = !!project && needsBackup(project.lastBackupAt, Date.now(), pieces.length + bags + boxes + steps.length > 0);
+  const backupWarning = !!project && needsBackup(project.lastBackupAt, Date.now(), pieces.length + bags + boxes + steps.length + tools > 0);
 
   return (
     <div className="mx-auto max-w-xl px-4 pb-32 pt-6">
