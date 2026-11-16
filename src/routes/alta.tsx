@@ -11,12 +11,17 @@ type Kind = "P" | "B" | "C";
 const LABEL: Record<Kind, string> = { P: "Pieza", B: "Bolsa", C: "Caja" };
 
 export const Route = createFileRoute("/alta")({
+  validateSearch: (search: Record<string, unknown>): { foto?: number } => {
+    const foto = search["foto"];
+    return typeof foto === "number" && Number.isInteger(foto) && foto > 0 ? { foto } : {};
+  },
   head: () => ({ meta: [{ title: "Alta rápida — Armario" }, { name: "description", content: "Foto, código y guardar en segundos." }, { property: "og:title", content: "Alta rápida — Armario" }, { property: "og:description", content: "Foto, código y guardar en segundos." }] }),
   component: QuickAdd,
 });
 
 function QuickAdd() {
   const nav = useNavigate();
+  const { foto } = Route.useSearch();
   const [kind, setKind] = useState<Kind>("P");
   const [code, setCode] = useState("");
   const [photos, setPhotos] = useState<number[]>([]);
@@ -25,6 +30,9 @@ function QuickAdd() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => { peekCode(kind).then(setCode); }, [kind, saving]);
+  useEffect(() => {
+    if (foto) setPhotos((current) => current.includes(foto) ? current : [...current, foto]);
+  }, [foto]);
 
   async function save(another: boolean) {
     setSaving(true);

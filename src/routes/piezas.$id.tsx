@@ -29,7 +29,7 @@ function PieceDetail() {
         <Field group label="Estado">
           <div className="grid grid-cols-3 gap-2">
             {PIECE_STATES.map((s) => (
-              <button key={s} onClick={() => set({ state: s })} className={cn("h-12 rounded-xl border-2 font-bold capitalize", piece.state === s ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card")}>{s}</button>
+              <button key={s} onClick={() => set({ state: s })} className={cn("min-h-14 rounded-xl border-2 px-2 font-bold capitalize", piece.state === s ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card")}>{s}</button>
             ))}
           </div>
         </Field>

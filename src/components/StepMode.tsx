@@ -32,7 +32,7 @@ export function StepMode({ mode }: { mode: "desmontaje" | "montaje" }) {
   }
 
   return (
-    <Page title={isAssembly ? "Modo montaje" : "Modo desmontaje"} back action={<Link to="/pasos" className="text-sm font-bold text-primary">Ver pasos</Link>}>
+    <Page title={isAssembly ? "Modo montaje" : "Modo desmontaje"} back action={<Link to="/pasos" className="inline-flex min-h-12 items-center text-sm font-bold text-primary">Ver pasos</Link>}>
       {!rawSteps ? <p className="text-muted-foreground">Cargando…</p> : !current ? (
         <div className="rounded-3xl border-2 border-dashed border-border p-6 text-center">
           <p className="mb-4 text-muted-foreground">Primero crea los pasos del desmontaje.</p>
@@ -57,7 +57,7 @@ export function StepMode({ mode }: { mode: "desmontaje" | "montaje" }) {
             <div className="p-4">
               <div className="mb-2 flex items-center justify-between gap-2">
                 <Code>Paso {current.order}</Code>
-                <Link to="/pasos/$id" params={{ id: String(current.id) }} aria-label="Editar este paso" className="grid size-10 place-items-center rounded-full bg-muted"><Pencil className="size-4" /></Link>
+                <Link to="/pasos/$id" params={{ id: String(current.id) }} aria-label="Editar este paso" className="grid size-12 shrink-0 place-items-center rounded-full bg-muted"><Pencil className="size-5" /></Link>
               </div>
               <h2 className="font-display text-2xl font-extrabold">{current.title || "Sin título"}</h2>
               {current.description && <p className="mt-2 whitespace-pre-wrap text-muted-foreground">{current.description}</p>}
@@ -72,10 +72,12 @@ export function StepMode({ mode }: { mode: "desmontaje" | "montaje" }) {
           <div className="mb-5"><StepItems step={current} assembly={isAssembly} /></div>
           {!isAssembly && <div className="mb-5"><StepItemCreator stepId={current.id!} /></div>}
 
-          <button type="button" aria-pressed={isComplete(current)} onClick={toggleComplete} className={cn(btnPrimary, "h-20 text-2xl", isComplete(current) && "bg-success text-success-foreground shadow-none")}>
-            <Check className="size-8" />{isAssembly ? "Montado" : "Hecho"}{isComplete(current) && " ✓"}
-          </button>
-          {isComplete(current) && <p className="mt-2 text-center text-xs text-muted-foreground">Pulsa de nuevo para deshacer.</p>}
+          <div className="sticky bottom-24 z-30 -mx-1 rounded-2xl bg-background/95 p-2 backdrop-blur">
+            <button type="button" aria-pressed={isComplete(current)} onClick={toggleComplete} className={cn(btnPrimary, "h-20 text-2xl", isComplete(current) && "bg-success text-success-foreground shadow-none")}>
+              <Check className="size-8" />{isAssembly ? "Montado" : "Hecho"}{isComplete(current) && " ✓"}
+            </button>
+            {isComplete(current) && <p className="mt-1 text-center text-sm text-muted-foreground">Pulsa de nuevo para deshacer.</p>}
+          </div>
 
           <div className="mt-5 grid grid-cols-2 gap-3">
             <button type="button" className={btnSecondary} disabled={index <= 0} onClick={() => setCurrentId(steps[index - 1]?.id)}><ChevronLeft className="size-5" /> Anterior</button>

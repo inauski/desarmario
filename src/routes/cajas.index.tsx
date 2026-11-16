@@ -21,7 +21,7 @@ function Boxes() {
 
   return (
     <Page title="Cajas y bolsas" back>
-      <input className={inputCls} placeholder="Buscar código, ubicación o contenido" value={q} onChange={(e) => setQ(e.target.value)} />
+      <input className={inputCls} aria-label="Buscar cajas y bolsas" placeholder="Buscar código, ubicación o contenido" value={q} onChange={(e) => setQ(e.target.value)} />
       <h2 className="mb-2 mt-5 text-sm font-bold uppercase tracking-widest text-muted-foreground">Cajas</h2>
       <div className="space-y-2">
         {boxes.filter((b) => m(b.code, b.location)).map((b) => (

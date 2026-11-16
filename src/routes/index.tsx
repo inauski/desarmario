@@ -4,6 +4,7 @@ import { AlertTriangle, Boxes, Camera, Hammer, ListOrdered, Package, PackageOpen
 import { db, getProject } from "@/lib/db";
 import { needsBackup } from "@/lib/backup";
 import { PhotoView } from "@/components/Photo";
+import { InstallAppCard } from "@/components/InstallAppCard";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -79,7 +80,8 @@ function Home() {
         <Tile to="/etiquetas" icon={<QrCode />} label="Etiquetas" />
         <Tile to="/herramientas" icon={<Wrench />} label="Herramientas" />
       </div>
-      <Link to="/ajustes" className="mt-6 block text-center text-sm font-semibold text-muted-foreground underline">Copia de seguridad</Link>
+      <InstallAppCard />
+      <Link to="/ajustes" className="mx-auto mt-4 flex min-h-12 w-fit items-center justify-center px-4 text-center text-sm font-semibold text-muted-foreground underline">Copia de seguridad</Link>
     </div>
   );
 }

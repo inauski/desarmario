@@ -6,15 +6,17 @@ import type { PieceState } from "@/lib/db";
 
 export function Page({ title, back, children, action }: { title: string; back?: boolean; children: ReactNode; action?: ReactNode }) {
   return (
-    <div className="mx-auto max-w-xl px-4 pb-32 pt-4">
-      <header className="mb-4 flex items-center gap-2">
-        {back && (
-          <button onClick={() => history.back()} aria-label="Volver" className="-ml-2 grid size-11 place-items-center rounded-full hover:bg-muted">
-            <ChevronLeft className="size-6" />
-          </button>
-        )}
-        <h1 className="flex-1 font-display text-2xl font-extrabold tracking-tight">{title}</h1>
-        {action}
+    <div className="mx-auto max-w-xl px-4 pb-36 pt-4">
+      <header className="mb-4 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
+        <div className="flex min-w-0 items-center gap-2">
+          {back && (
+            <button onClick={() => history.back()} aria-label="Volver" className="-ml-2 grid size-12 shrink-0 place-items-center rounded-full hover:bg-muted">
+              <ChevronLeft className="size-6" />
+            </button>
+          )}
+          <h1 className="min-w-0 flex-1 truncate font-display text-2xl font-extrabold tracking-tight">{title}</h1>
+        </div>
+        {action && <div className="shrink-0">{action}</div>}
       </header>
       {children}
     </div>
@@ -45,13 +47,13 @@ export function Field({ label, children, group }: { label: string; children: Rea
   );
 }
 
-export const inputCls = "w-full rounded-xl border-2 border-input bg-card px-4 py-3 text-base outline-none focus:border-primary";
-export const btnPrimary = "inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 text-lg font-bold text-primary-foreground shadow-tool active:scale-[0.98] disabled:opacity-50";
-export const btnSecondary = "inline-flex h-12 items-center justify-center gap-2 rounded-xl border-2 border-border bg-card px-4 font-semibold active:scale-[0.98]";
+export const inputCls = "min-h-14 w-full rounded-xl border-2 border-input bg-card px-4 py-3 text-base outline-none focus:border-primary";
+export const btnPrimary = "inline-flex h-16 w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 text-lg font-bold text-primary-foreground shadow-tool active:scale-[0.98] disabled:opacity-50";
+export const btnSecondary = "inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border-2 border-border bg-card px-4 py-3 font-semibold active:scale-[0.98]";
 
 export function ListLink({ to, params, children }: { to: string; params?: Record<string, string>; children: ReactNode }) {
   return (
-    <Link to={to as any} params={params as any} className="flex items-center gap-3 rounded-2xl border-2 border-border bg-card p-3 active:bg-muted">
+    <Link to={to as any} params={params as any} className="flex min-h-20 items-center gap-3 rounded-2xl border-2 border-border bg-card p-3 active:bg-muted">
       {children}
     </Link>
   );

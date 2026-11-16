@@ -102,14 +102,14 @@ function LabelsPage() {
       <input className={inputCls} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar código, nombre o ubicación" aria-label="Buscar etiquetas" />
       <div className="my-3 flex gap-2 overflow-x-auto pb-1">
         {(["all", "piece", "bag", "box"] as Filter[]).map((value) => (
-          <button type="button" key={value} onClick={() => setFilter(value)} className={cn("shrink-0 rounded-full border-2 px-4 py-2 text-sm font-bold", filter === value ? "border-foreground bg-foreground text-background" : "border-border")}>
+          <button type="button" key={value} onClick={() => setFilter(value)} className={cn("min-h-12 shrink-0 rounded-full border-2 px-4 py-2 text-sm font-bold", filter === value ? "border-foreground bg-foreground text-background" : "border-border")}>
             {value === "all" ? "Todas" : `${LABEL_KIND_NAMES[value]}s`}
           </button>
         ))}
       </div>
       <div className="mb-3 flex gap-2">
-        <button type="button" className="flex-1 text-sm font-bold text-primary" onClick={() => setSelected((current) => new Set([...current, ...visible.map(labelKey)]))}>Seleccionar visibles</button>
-        <button type="button" className="flex-1 text-right text-sm font-bold text-muted-foreground" onClick={() => setSelected(new Set())}>Quitar selección</button>
+        <button type="button" className="min-h-12 flex-1 text-sm font-bold text-primary" onClick={() => setSelected((current) => new Set([...current, ...visible.map(labelKey)]))}>Seleccionar visibles</button>
+        <button type="button" className="min-h-12 flex-1 text-right text-sm font-bold text-muted-foreground" onClick={() => setSelected(new Set())}>Quitar selección</button>
       </div>
 
       <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2">

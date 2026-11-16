@@ -45,7 +45,7 @@ function ToolsPage() {
       <form onSubmit={addTool} className="mb-6 space-y-3 rounded-2xl border-2 border-border bg-card p-4">
         <p className="font-bold">Añadir herramienta</p>
         <Field label="Nombre"><input className={inputCls} value={name} onChange={(event) => setName(event.target.value)} placeholder="Ej. Llave Allen" /></Field>
-        <Field label="Tamaño"><input className={inputCls} value={size} onChange={(event) => setSize(event.target.value)} placeholder="Ej. Nº 4, 10 mm, PH2" /></Field>
+        <Field label="Tamaño (opcional)"><input className={inputCls} value={size} onChange={(event) => setSize(event.target.value)} placeholder="Ej. Nº 4, 10 mm, PH2" /></Field>
         <button type="submit" className={btnPrimary} disabled={!name.trim()}><Plus /> Añadir a la checklist</button>
       </form>
 

@@ -10,9 +10,10 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
-import { Link as L2 } from "@tanstack/react-router";
-import { Camera } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
+import { CameraQuickAction } from "@/components/CameraQuickAction";
+import { setupPwa } from "@/lib/pwa";
+import { setupInstallPrompt } from "@/lib/install-prompt";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -92,17 +93,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#e0662b" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "default" },
+      { name: "apple-mobile-web-app-title", content: "Armario" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "manifest", href: "/manifest.webmanifest" },
-      { rel: "apple-touch-icon", href: "/icon-512.png" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=JetBrains+Mono:wght@700&display=swap" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -127,14 +126,16 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useEffect(() => {
+    setupInstallPrompt();
+    setupPwa();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
-      <L2 to="/alta" aria-label="Alta rápida con cámara" className="fixed bottom-6 right-5 z-50 grid size-16 place-items-center rounded-full bg-primary text-primary-foreground shadow-tool active:scale-95">
-        <Camera className="size-7" />
-      </L2>
+      <CameraQuickAction />
       <Toaster position="top-center" />
     </QueryClientProvider>
   );

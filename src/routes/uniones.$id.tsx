@@ -30,7 +30,7 @@ function JointDetail() {
           <div className="flex flex-wrap gap-2">
             {pieces.map((p) => (
               <button key={p.id} type="button" onClick={() => toggle(p.id!)}
-                className={cn("rounded-xl border-2 px-3 py-2 text-left text-sm", joint.pieceIds.includes(p.id!) ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card")}>
+                className={cn("min-h-12 rounded-xl border-2 px-4 py-2 text-left text-sm", joint.pieceIds.includes(p.id!) ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card")}>
                 <span className="font-mono font-bold">{p.code}</span> {p.name}
               </button>
             ))}
@@ -39,7 +39,7 @@ function JointDetail() {
         <Field group label="Tipo de fijación">
           <div className="grid grid-cols-3 gap-2">
             {JOINT_TYPES.map((t) => (
-              <button key={t} type="button" onClick={() => set({ type: t })} className={cn("h-12 rounded-xl border-2 font-bold capitalize", joint.type === t ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card")}>{t}</button>
+              <button key={t} type="button" onClick={() => set({ type: t })} className={cn("min-h-14 rounded-xl border-2 px-2 font-bold capitalize", joint.type === t ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card")}>{t}</button>
             ))}
           </div>
         </Field>

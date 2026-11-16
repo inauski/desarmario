@@ -118,14 +118,27 @@ export async function getProject(): Promise<Project> {
   return (await db.project.get(1)) ?? { id: 1, name: "Mi armario", description: "", photoIds: [] };
 }
 
-export async function compressImage(file: Blob, max = 1600, quality = 0.7): Promise<Blob> {
+export const PHOTO_MAX_EDGE = 1600;
+export const PHOTO_JPEG_QUALITY = 0.7;
+
+export async function compressImage(file: Blob, max = PHOTO_MAX_EDGE, quality = PHOTO_JPEG_QUALITY): Promise<Blob> {
   const bmp = await createImageBitmap(file);
-  const scale = Math.min(1, max / Math.max(bmp.width, bmp.height));
-  const canvas = document.createElement("canvas");
-  canvas.width = Math.round(bmp.width * scale);
-  canvas.height = Math.round(bmp.height * scale);
-  canvas.getContext("2d")!.drawImage(bmp, 0, 0, canvas.width, canvas.height);
-  return new Promise((res, rej) => canvas.toBlob((b) => (b ? res(b) : rej(new Error("No se pudo comprimir"))), "image/jpeg", quality));
+  try {
+    const scale = Math.min(1, max / Math.max(bmp.width, bmp.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(bmp.width * scale));
+    canvas.height = Math.max(1, Math.round(bmp.height * scale));
+    const context = canvas.getContext("2d");
+    if (!context) throw new Error("No se pudo preparar la imagen");
+    context.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+    return await new Promise<Blob>((resolve, reject) => canvas.toBlob(
+      (blob) => blob ? resolve(blob) : reject(new Error("No se pudo comprimir")),
+      "image/jpeg",
+      quality,
+    ));
+  } finally {
+    bmp.close();
+  }
 }
 
 export async function savePhoto(file: Blob) {
