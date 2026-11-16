@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
-import { Camera, X } from "lucide-react";
+import { Camera, LoaderCircle, X } from "lucide-react";
+import { toast } from "sonner";
 import { db, savePhoto } from "@/lib/db";
 import { cn } from "@/lib/utils";
 

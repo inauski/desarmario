@@ -10,9 +10,10 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
-import { Link as L2 } from "@tanstack/react-router";
-import { Camera } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
+import { CameraQuickAction } from "@/components/CameraQuickAction";
+import { setupPwa } from "@/lib/pwa";
+import { setupInstallPrompt } from "@/lib/install-prompt";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 

@@ -6,15 +6,17 @@ import type { PieceState } from "@/lib/db";
 
 export function Page({ title, back, children, action }: { title: string; back?: boolean; children: ReactNode; action?: ReactNode }) {
   return (
-    <div className="mx-auto max-w-xl px-4 pb-32 pt-4">
-      <header className="mb-4 flex items-center gap-2">
-        {back && (
-          <button onClick={() => history.back()} aria-label="Volver" className="-ml-2 grid size-11 place-items-center rounded-full hover:bg-muted">
-            <ChevronLeft className="size-6" />
-          </button>
-        )}
-        <h1 className="flex-1 font-display text-2xl font-extrabold tracking-tight">{title}</h1>
-        {action}
+    <div className="mx-auto max-w-xl px-4 pb-36 pt-4">
+      <header className="mb-4 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
+        <div className="flex min-w-0 items-center gap-2">
+          {back && (
+            <button onClick={() => history.back()} aria-label="Volver" className="-ml-2 grid size-12 shrink-0 place-items-center rounded-full hover:bg-muted">
+              <ChevronLeft className="size-6" />
+            </button>
+          )}
+          <h1 className="min-w-0 flex-1 truncate font-display text-2xl font-extrabold tracking-tight">{title}</h1>
+        </div>
+        {action && <div className="shrink-0">{action}</div>}
       </header>
       {children}
     </div>
