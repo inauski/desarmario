@@ -1,7 +1,7 @@
-# Herramientas y copias del proyecto
+# Revisión móvil y PWA
 
-- [x] Añadir checklist de herramientas con nombre, tamaño y preparada.
-- [x] Incluir todos los datos y fotos al exportar e importar JSON.
-- [x] Exportar un PDF con piezas, uniones y pasos.
-- [x] Avisar en inicio si la copia tiene más de 3 días o no existe.
-- [x] Verificar checklist, restauración, PDF y aviso.
+- [ ] Revisar todas las pantallas para uso con una mano y controles táctiles grandes.
+- [ ] Mejorar contraste y legibilidad con poca luz; mantener formularios breves.
+- [ ] Mantener la cámara accesible desde cualquier pantalla y comprimir todas las fotos al guardar.
+- [ ] Añadir soporte PWA instalable y offline seguro fuera de la vista previa.
+- [ ] Probar recorridos móviles, compresión, manifiesto y comportamiento offline verificable.
