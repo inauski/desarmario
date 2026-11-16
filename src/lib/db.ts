@@ -1,5 +1,5 @@
 import Dexie, { type Table } from "dexie";
-import { activeWorkspaceKey } from "./workspaces";
+import { activeWorkspaceKey, listWorkspaces } from "./workspaces";
 
 export type PieceState = "montada" | "desmontada" | "guardada";
 export const PIECE_STATES: PieceState[] = ["montada", "desmontada", "guardada"];
@@ -116,7 +116,7 @@ export async function createBox(location = "") {
 }
 
 export async function getProject(): Promise<Project> {
-  return (await db.project.get(1)) ?? { id: 1, name: "Mi armario", description: "", photoIds: [] };
+  return (await db.project.get(1)) ?? { id: 1, name: listWorkspaces().find((w) => w.key === activeWorkspaceKey())?.name ?? "Mi armario", description: "", photoIds: [] };
 }
 
 export const PHOTO_MAX_EDGE = 1600;
