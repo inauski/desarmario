@@ -34,12 +34,14 @@ export function StateBadge({ state }: { state: PieceState }) {
   return <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-bold uppercase", stateCls[state])}>{state}</span>;
 }
 
-export function Field({ label, children }: { label: string; children: ReactNode }) {
+/** Use `group` when children are buttons/pickers: a <label> would forward taps to its first button. */
+export function Field({ label, children, group }: { label: string; children: ReactNode; group?: boolean }) {
+  const Tag = group ? "div" : "label";
   return (
-    <label className="block space-y-1.5">
+    <Tag className="block space-y-1.5">
       <span className="text-sm font-semibold text-muted-foreground">{label}</span>
       {children}
-    </label>
+    </Tag>
   );
 }
 

@@ -18,7 +18,7 @@ function ProjectPage() {
       <div className="space-y-5">
         <Field label="Nombre"><input className={inputCls} defaultValue={p.name} onBlur={(e) => set({ name: e.target.value || "Mi armario" })} /></Field>
         <Field label="Descripción"><textarea className={inputCls} rows={3} defaultValue={p.description} onBlur={(e) => set({ description: e.target.value })} /></Field>
-        <Field label="Fotos del armario montado"><PhotoPicker value={p.photoIds} onChange={(photoIds) => set({ photoIds })} /></Field>
+        <Field group label="Fotos del armario montado"><PhotoPicker value={p.photoIds} onChange={(photoIds) => set({ photoIds })} /></Field>
       </div>
     </Page>
   );
