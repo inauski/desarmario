@@ -8,4 +8,5 @@
 - [x] Añadir un botón de instalación directa para Android dentro de «Instalar en pantalla de inicio»; 26 pruebas pasan.
 - [x] Aplicar el diseño aportado al favicon, Android, Android maskable y Apple.
 - [x] Renombrar la app instalada y los títulos del navegador como Desarmario.
+- [x] Añadir un botón «?» en todas las pantallas que abre un pop-up con las instrucciones y los 8 pasos; 30 pruebas pasan.
 - [ ] Comprobar recarga sin conexión e instalación real en la versión publicada — bloqueado hasta publicar la app.

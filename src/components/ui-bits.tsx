@@ -15,7 +15,7 @@ export function Page({ title, back, children, action }: { title: string; back?: 
               <ChevronLeft className="size-6" />
             </button>
           )}
-          <h1 className="min-w-0 flex-1 truncate font-display text-2xl font-extrabold tracking-tight">{title}</h1>
+          <h1 className="min-w-0 flex-1 line-clamp-2 font-display text-2xl font-extrabold tracking-tight">{title}</h1>
         </div>
         <div className="flex shrink-0 items-center gap-1">
           <HelpButton />
