@@ -32,6 +32,9 @@ describe("compresión de fotos al guardar", () => {
     expect(canvas.height).toBe(800);
     expect(drawImage).toHaveBeenCalledWith(bitmap, 0, 0, PHOTO_MAX_EDGE, 800);
     expect(bitmap.close).toHaveBeenCalledOnce();
-    expect((await db.photos.get(id))?.blob).toBe(compressed);
+    const stored = await db.photos.get(id);
+    expect(stored?.blob.type).toBe("image/jpeg");
+    expect(stored?.blob.size).toBe(compressed.size);
+    expect(await stored?.blob.text()).toBe("jpeg-comprimido");
   });
 });
